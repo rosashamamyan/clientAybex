@@ -1,0 +1,73 @@
+.login-container h2 {
+    margin-bottom: 20px;
+}
+
+.login input {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-input input {
+    width: 25vw;
+    height: 40px;
+    border: none;
+    border-bottom: 2px solid gray;
+    margin-bottom: 10px;
+    outline: none;
+}
+
+.remember-me {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.remember-me div {
+    display: flex;
+    gap: 5px;
+}
+
+.agree {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.form-btns{
+    display: flex;
+    justify-content: center;
+}
+.login-btn {
+    width: 120px;
+    padding: 8px 0;
+    background-color: rgb(198, 99, 255);
+    color: white;
+    border: 1px solid rgb(198, 99, 255);
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .3s ease;
+    margin: 15px;
+}
+
+.login-btn:hover {
+    color: rgb(198, 99, 255);
+    background-color: transparent;
+}
+
+.login-btn-pr {
+    background-color: rgb(162, 4, 253);
+    border: 1px solid rgb(162, 4, 253);
+}
+
+
+.login-btn-pr :hover {
+    color: rgb(162, 4, 253);
+    background-color: transparent;
+}
+
+.login-link {
+    font-weight: 600;
+}

@@ -1,0 +1,19 @@
+.sign {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.sign_logo {
+    background-color: #272425;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sign_form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
