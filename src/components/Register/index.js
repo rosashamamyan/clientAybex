@@ -10,8 +10,8 @@ const Register = ({ setIsLogin }) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    const user = signUp(data);
+  const onSubmit = async (data) => {
+    const user = await signUp(data);
     console.log("user", user);
   };
 

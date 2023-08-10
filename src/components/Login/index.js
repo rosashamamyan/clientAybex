@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { login } from "../../service/Auth";
 import "./style.css";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ setIsLogin }) => {
   const {
@@ -8,10 +9,15 @@ const Login = ({ setIsLogin }) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate()
 
-  const onSubmit = (data) => {
-    const user = login(data);
-    console.log("user", user);
+  const onSubmit = async (loginData) => {
+    const { data } = await login(loginData);
+    if (!data) {
+
+    }
+    localStorage.setItem("token", data.accessToken);
+    navigate('/dashboard')
   };
 
   return (
