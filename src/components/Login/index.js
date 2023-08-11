@@ -9,15 +9,19 @@ const Login = ({ setIsLogin }) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const onSubmit = async (loginData) => {
-    const { data } = await login(loginData);
-    if (!data) {
-
+    const {email, password, isRemembered} = loginData
+    const data = await login({
+      email,
+      password
+    });
+    if (data) {
+      localStorage.setItem("isRemembered", isRemembered)
+      localStorage.setItem("token", data.data.accessToken);
+      navigate("/dashboard");
     }
-    localStorage.setItem("token", data.accessToken);
-    navigate('/dashboard')
   };
 
   return (
@@ -38,7 +42,7 @@ const Login = ({ setIsLogin }) => {
           </div>
           <div className="remember-me">
             <div>
-              <input type="checkbox" />
+              <input type="checkbox" {...register("isRemembered")}/>
               <label>Remember me</label>
             </div>
             <p>

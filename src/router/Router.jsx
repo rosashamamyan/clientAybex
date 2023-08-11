@@ -1,19 +1,25 @@
 import { useRoutes } from "react-router-dom";
 import Sign from "../pages/Sign";
 import Profile from "../pages/Profile";
-
+import Layout from "../components/Layout";
 function Router() {
   let element = useRoutes([
-     {
-        path: '/',
-        element: <Sign />
-     },
-     {
+    {
+      path: "/",
+      element: <Sign />,
+    },
+    {
       path: '/dashboard',
-      element: <Profile />
-     }
+      element: <Layout />,
+      children: [
+         {
+            path: "",
+            element: <Profile />,
+         },
+      ]
+    },
   ]);
-  return element
+  return element;
 }
 
-export default Router
+export default Router;

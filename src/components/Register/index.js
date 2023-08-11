@@ -11,8 +11,8 @@ const Register = ({ setIsLogin }) => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const user = await signUp(data);
-    console.log("user", user);
+    await signUp(data);
+    setIsLogin(true);
   };
 
   return (
