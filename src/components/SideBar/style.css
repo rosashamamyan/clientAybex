@@ -1,0 +1,36 @@
+.navClose {
+    display: none;
+    opacity: 0;
+    width: 0px;
+    height: 100vh;
+    z-index: 1;
+    transition: all .5s ease-in-out;
+}
+
+.navOpen {
+    padding: 10px;
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    width: 450px;
+    height: 100vh;
+    background-color: #fff;
+    z-index: 1;
+    transition: all .5s ease-in-out;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+}
+.navItem >svg{
+    margin-right: 16px;
+    font-size: 25px;
+}
+.navItem >a {
+    text-decoration: none;
+}

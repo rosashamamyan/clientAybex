@@ -1,6 +1,7 @@
 import { useState } from "react";
 import $api, { API_URL } from "../../http";
 import { useNavigate } from "react-router-dom";
+import './style.css'
 
 const Dashboard = () => {
   const [loggedUser, setLoggedUser] = useState({})
@@ -17,12 +18,12 @@ const Dashboard = () => {
   };
 
   return (
-    <>
+    <div className="container">
       <div>Dashboard</div>
       <h3>{loggedUser.email}</h3>
       <button onClick={logout}>logout</button>
       <button onClick={getUser}>getUser</button>
-    </>
+    </div>
   );
 };
 

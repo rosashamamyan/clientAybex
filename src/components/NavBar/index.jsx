@@ -1,30 +1,17 @@
-import React, { useState } from 'react'
-import './style.css'
-import {TfiMenu} from 'react-icons/tfi'
+import React from "react";
+import "./style.css";
+import { TfiClose, TfiMenu } from "react-icons/tfi";
 
-const NavBar = () => {
-  const [isOpen, setIsOpen] = useState(false)
-
-  const handleOpen = () => {
-    setIsOpen(!isOpen)
-  }
-
+const NavBar = ({ isOpen, handleOpen }) => {
   return (
-    <div>
-      <div>
-        <TfiMenu onClick={handleOpen}/>
-      </div>
-      {
-        isOpen &&
-        <nav>
-        <ul>
-            <li>ehge</li>
-            <li>ehger</li>
-        </ul>
-      </nav>
-      }
+    <div className="navBar">
+      {isOpen ? (
+        <TfiClose className="burger_button" onClick={handleOpen} />
+      ) : (
+        <TfiMenu className="burger_button" onClick={handleOpen} />
+      )}
     </div>
   );
-}
+};
 
-export default NavBar
+export default NavBar;

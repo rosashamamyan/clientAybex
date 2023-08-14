@@ -1,14 +1,25 @@
-import React from 'react'
-import NavBar from '../NavBar'
-import { Outlet } from 'react-router-dom'
+import React, { useState } from "react";
+import NavBar from "../NavBar";
+import "./style.css";
+import { Outlet } from "react-router-dom";
+import SideBar from "../SideBar";
 
 const Layout = () => {
-  return (
-    <div>
-        <NavBar />
-        <Outlet />
-    </div>
-  )
-}
+  const [isOpen, setIsOpen] = useState(false);
 
-export default Layout
+  const handleOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <div className="layout">
+      <header className="header">
+        <SideBar isOpen={isOpen} handleOpen={handleOpen} />
+        <NavBar isOpen={isOpen} handleOpen={handleOpen} />
+      </header>
+      <Outlet />
+    </div>
+  );
+};
+
+export default Layout;
