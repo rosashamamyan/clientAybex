@@ -25,14 +25,12 @@
 
 .remember-me div {
     display: flex;
-    gap: 5px;
 }
 
 .agree {
     height: 40px;
     display: flex;
     align-items: center;
-    gap: 5px;
 }
 .form-btns{
     display: flex;

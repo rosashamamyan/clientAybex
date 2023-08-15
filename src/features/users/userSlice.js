@@ -1,30 +1,28 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getAllUsers } from '../../service/User'
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { getAllUsers } from "../../service/User";
 
 const initialState = {
-  users: []
-}
+  users: [],
+};
 
-const fetchUsers = createAsyncThunk(
-    "",
-    async () => {
-        const users = await getAllUsers()
-        return users
-    }
-)
+export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
+  const users = await getAllUsers();
+  return users;
+});
 
-export const userSlice = createSlice({
-  name: 'user',
+const userSlice = createSlice({
+  name: "users",
   initialState,
-  reducers: {
-    
+  reducers: {},
+  extraReducers: {
+    [fetchUsers.fulfilled]: (state, action) => {
+      state.users = action.payload.data;
+    },
   },
-  extraReducers: (builder) => {
-    builder.addCase(fetchUsers.fulfilled, (state, action) => {
-        state.users.push(action.payload);
-    })
-  }
-})
-export const {} = userSlice.actions
+});
 
-export default userSlice.reducer
+export const selectUsers = (state) => {
+  return state.users.users;
+};
+
+export default userSlice.reducer;
