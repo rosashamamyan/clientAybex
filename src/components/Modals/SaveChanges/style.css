@@ -1,0 +1,56 @@
+.savechanges {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+}
+
+.savechanges-container {
+    width: 40vw;
+    height: 30vh;
+    border-radius: 10px;
+    background-color: #F4F4F2FF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px;
+}
+
+.savechanges-container .question{
+    margin-bottom: 30px;
+    font-weight: 600;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+
+.savechanges-container .buttons{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+} 
+
+.buttons button {
+    padding: 12px 33px;
+    border: none;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer; 
+}
+
+.buttons .okButton {
+    background-color: #D2BFFFFF;
+}
+
+.buttons .cancelButton {
+    background-color: #fff;
+}

@@ -68,30 +68,45 @@
     background-color: black;
 }
 
-.addUser__form {
+.addUser__forms {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.dateInput {
+    height: 56px;
+    padding: 16.5px 14px;
+    border: 1px solid #BCBCBAFF;
+    border-radius: 4px;
+}
+
+.addUser__form {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.addUser__form > div:first-child{
+.addUser__form > .form:first-child{
     margin-right: 50px;
 }
 
-.addUser__form > div {
+.addUser__form > .form {
     width: 50%;
     display: flex;
     flex-direction: column;
 }
 
 .addAcount__form {
-    width: 90%;
-    border-radius: 10px;
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+
+.addAcount__form .form__inputs {
+    margin-bottom: 30px;
 }
 
 .cancel-icon svg {
@@ -100,6 +115,7 @@
 }
 
 .tabs-buttons {
+    width: 100%;
     display: flex;
     justify-content: flex-end;
     padding: 16px;

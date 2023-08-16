@@ -1,20 +1,41 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { TextField } from "@mui/material";
-import Button from "@mui/material/Button";
-import SendIcon from "@mui/icons-material/Send";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
 import ClearIcon from "@mui/icons-material/Clear";
-import { create } from "../../../service/User";
+import { createUser } from "../../../service/User";
+import MenuItem from "@mui/material/MenuItem";
+// import Select from "@mui/material/Select";
+// import dayjs from "dayjs";
+// import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "./style.css";
+import SaveChanges from "../SaveChanges";
 
 const AddUser = ({ toggleForm }) => {
-  const [isShow, setIsShow] = useState(true)
+  const [isShow, setIsShow] = useState(true);
+  const [isSaveOpen, setIsSaveOpen] = useState(false)
+  const [status, setStatus] = useState("");
+  const [formData, setFormData] = useState({})
 
   const handleShow = () => {
-    setIsShow(!isShow)
+    setIsShow(!isShow);
+  };
+  
+  const handleStatusChange = (event) => {
+    setStatus(event.target.value);
+  };
+
+  const handleDateChange = (newDate) => {
+   console.log(newDate);
+  };
+
+  const handleSave = async() => {
+    await createUser(formData);
+  } 
+
+  const toggleSaveModal = (bool) => {
+     setIsSaveOpen(bool)
   }
 
   const {
@@ -24,12 +45,8 @@ const AddUser = ({ toggleForm }) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    await create(data);
-    reset();
-    setTimeout(() => {
-      toggleForm();
-    }, 500);
+  const onSubmit = (data) => {
+    setFormData({...data})
   };
 
   return (
@@ -51,91 +68,150 @@ const AddUser = ({ toggleForm }) => {
               2
             </div>
           </div>
-          {isShow ? (
-            <form className="addUser__form">
-              <div>
-                <TextField
-                  label="First Name*"
-                  sx={{ m: "0 0 30px 0" }}
-                  {...register("First Name*", { required: true })}
-                />
-                <TextField
-                  label="Email"
-                  sx={{ m: "0 0 30px 0" }}
-                  {...register("email", { required: true })}
-                />
-                <TextField
-                  label="Street Address"
-                  sx={{ m: "0 0 30px 0" }}
-                  {...register("address", { required: true })}
-                />
-                <TextField
-                  label="State/Region"
-                  sx={{ m: "0 0 30px 0" }}
-                  {...register("state", { required: true })}
-                />
-                <TextField
-                  label="Country"
-                  {...register("country", { required: true })}
-                />
+          <form onSubmit={handleSubmit(onSubmit)} className="addUser__forms">
+            {isShow ? (
+              <>
+                <div className="addUser__form">
+                  <div className="form">
+                    <TextField
+                      label="First Name*"
+                      sx={{ m: "0 0 30px 0" }}
+                      {...register("firstName", { required: true })}
+                    />
+                    <TextField
+                      label="Email"
+                      sx={{ m: "0 0 30px 0" }}
+                      {...register("email", { required: true })}
+                    />
+                    <TextField
+                      label="Street Address"
+                      sx={{ m: "0 0 30px 0" }}
+                      {...register("address", { required: true })}
+                    />
+                    <TextField
+                      label="State/Region"
+                      sx={{ m: "0 0 30px 0" }}
+                      {...register("state", { required: true })}
+                    />
+                    <TextField
+                      label="Country"
+                      {...register("country", { required: true })}
+                    />
+                  </div>
+                  <div className="form">
+                    <TextField
+                      label="Last Name*"
+                      sx={{ m: "0 0 30px 0" }}
+                      {...register("lastName", { required: true })}
+                    />
+                    <TextField
+                      label="Phone Number"
+                      sx={{ m: "0 0 30px 0" }}
+                      {...register("phone", { required: true })}
+                    />
+                    <TextField
+                      label="City"
+                      sx={{ m: "0 0 30px 0" }}
+                      {...register("city", { required: true })}
+                    />
+                    <TextField
+                      label="Postal Code"
+                      sx={{ m: "0 0 30px 0" }}
+                      {...register("postal_code", { required: true })}
+                    />
+                    <input
+                      type="date"
+                      className="dateInput"
+                      onChange={(newDate) => {
+                        handleDateChange(newDate.toISOString());
+                      }}
+                      {...register("dob", { required: true })}
+                    />
+                  </div>
+                </div>
+                <div className="tabs-buttons">
+                  <button onClick={handleShow} className="purple-button">
+                    continue
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="addAcount__form">
+                <div className="form__inputs">
+                  <TextField
+                    label="Account Number"
+                    // sx={{ m: "0 30px 0 0" }}
+                    {...register("account_number", { required: true })}
+                  />
+                </div>
+                <div className="tabs-buttons">
+                  <button
+                    className="purple-button"
+                    onClick={() => toggleSaveModal(true)}
+                  >
+                    save
+                  </button>
+                  <button onClick={handleShow} className="white-button">
+                    back
+                  </button>
+                </div>
               </div>
-              <div>
-                <TextField
-                  label="Last Name*"
-                  sx={{ m: "0 0 30px 0" }}
-                  {...register("lastName", { required: true })}
-                />
-                <TextField
-                  label="Phone Number"
-                  sx={{ m: "0 0 30px 0" }}
-                  {...register("phone", { required: true })}
-                />
-                <TextField
-                  label="City"
-                  sx={{ m: "0 0 30px 0" }}
-                  {...register("city", { required: true })}
-                />
-                <TextField
-                  label="Postal Code"
-                  sx={{ m: "0 0 30px 0" }}
-                  {...register("postal_code", { required: true })}
-                />
-                <TextField
-                  label="DOB"
-                  {...register("postal_code", { required: true })}
-                />
-              </div>
-            </form>
-          ) : (
-            <form className="addAcount__form">
-              <TextField
-                label="Account Number"
-                sx={{ m: "0 30px 0 0" }}
-                {...register("account_number", { required: true })}
-              />
-              <TextField
-                label="Account status"
-                {...register("account_status", { required: true })}
-              />
-            </form>
-          )}
+            )}
+          </form>
         </div>
-        <div className="tabs-buttons">
-          {isShow ? (
-            <button onClick={handleShow} className="purple-button">
-              continue
-            </button>
-          ) : (
-            <div>
-              <button onClick={handleShow} className="white-button">
-                back
-              </button>
-              <button className="purple-button">save</button>
-            </div>
-          )}
-        </div>
+        {isSaveOpen && (
+          <SaveChanges
+            toggleSaveModal={toggleSaveModal}
+            isSaveOpen={isSaveOpen}
+            handleSave={handleSave}
+          />
+        )}
       </div>
     </div>
   );
 };
 export default AddUser;
+
+
+
+
+
+
+              {/* <TextField
+                value={status}
+                onChange={(e) => handleStatusChange(e)}
+                select
+                {...register("account_status", { required: true })}
+                label="Acount Status"
+              >
+                <MenuItem value={1}>activated</MenuItem>
+                <MenuItem value={0}>deactivated</MenuItem>
+              </TextField> */}
+              {
+                /* <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={status}
+                label="Age"
+                onChange={(e) => handleStatusChange(e)}
+                {...register("account_status", { required: false })}
+              >
+              <MenuItem value={10}>activated</MenuItem>
+              <MenuItem value={20}>deactivated</MenuItem>
+            </Select> */
+              }
+
+
+
+                              {
+                                /* <LocalizationProvider dateAdapter={AdapterDayjs} {...register("dob",{required:true})}>
+                  <DateTimePicker
+                    label="Controlled picker"
+                    value={date}
+                    onChange={(newDate) => {
+                      console.log(newDate.toISOString());
+                      handleDateChange(newDate.toISOString());
+                    }}
+                  />
+                </LocalizationProvider> */
+                              }
