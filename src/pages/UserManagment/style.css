@@ -1,4 +1,5 @@
 .userManagment {
+    height: auto;
     position: relative;
     background-color: #E5E5E5;
     display: flex;
@@ -21,6 +22,7 @@
 .userManagment__control-header {
     font-size: 22px;
     font-weight: 700;
+    margin-right: 10px;
 }
 
 .userManagment__control-checkbox {
@@ -29,8 +31,12 @@
     font-size: 18px;
 }
 
+.userManagment__control-checkbox input {
+    margin-right: 10px;
+}
+
 .userManagment__control-search {
-    
+    margin-right: 10px;
 }
 
 .userManagment__control-search input {
@@ -64,6 +70,7 @@
     border: none;
     cursor: pointer;
     transition: .5s;
+    margin: 0 10px 5px 0;
 }
 
 .userManagment__control-buttons .purple-button {
@@ -79,4 +86,8 @@
 
 .userManagment__control-buttons button svg {
     font-size: 23px;
+}
+
+.userManagment__data {
+    height: 100%;
 }

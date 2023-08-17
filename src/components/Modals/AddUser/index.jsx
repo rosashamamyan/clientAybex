@@ -2,21 +2,18 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { TextField } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
-import { createUser } from "../../../service/User";
 import MenuItem from "@mui/material/MenuItem";
-// import Select from "@mui/material/Select";
-// import dayjs from "dayjs";
-// import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import "./style.css";
 import SaveChanges from "../SaveChanges";
+import { useDispatch } from "react-redux";
+import { addUser } from "../../../features/users/userSlice";
+import "./style.css";
 
 const AddUser = ({ toggleForm }) => {
   const [isShow, setIsShow] = useState(true);
   const [isSaveOpen, setIsSaveOpen] = useState(false)
   const [status, setStatus] = useState("");
   const [formData, setFormData] = useState({})
+  const dispatch = useDispatch()
 
   const handleShow = () => {
     setIsShow(!isShow);
@@ -31,7 +28,10 @@ const AddUser = ({ toggleForm }) => {
   };
 
   const handleSave = async() => {
-    await createUser(formData);
+    dispatch(addUser(formData))
+    toggleSaveModal(false)
+    reset()
+    toggleForm()
   } 
 
   const toggleSaveModal = (bool) => {
@@ -41,8 +41,8 @@ const AddUser = ({ toggleForm }) => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
+    reset,
   } = useForm();
 
   const onSubmit = (data) => {
@@ -200,18 +200,3 @@ export default AddUser;
               <MenuItem value={20}>deactivated</MenuItem>
             </Select> */
               }
-
-
-
-                              {
-                                /* <LocalizationProvider dateAdapter={AdapterDayjs} {...register("dob",{required:true})}>
-                  <DateTimePicker
-                    label="Controlled picker"
-                    value={date}
-                    onChange={(newDate) => {
-                      console.log(newDate.toISOString());
-                      handleDateChange(newDate.toISOString());
-                    }}
-                  />
-                </LocalizationProvider> */
-                              }

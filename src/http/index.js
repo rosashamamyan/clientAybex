@@ -19,7 +19,6 @@ $api.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    console.log("jhwbeugfvbwgf", error);
     if (
       error?.response.status === 401 &&
       error.config &&
