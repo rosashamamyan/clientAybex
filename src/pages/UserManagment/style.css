@@ -1,5 +1,5 @@
 .userManagment {
-    height: auto;
+    min-height: calc(100vh - 60px);
     position: relative;
     background-color: #E5E5E5;
     display: flex;
@@ -89,5 +89,5 @@
 }
 
 .userManagment__data {
-    height: 100%;
+    /* height: 100%; */
 }

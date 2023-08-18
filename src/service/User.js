@@ -1,5 +1,4 @@
-import axios from "axios";
-import $api, { API_URL } from "../http";
+import $api from "../http";
 
 export const createUser = async (data) => {
   return await $api.post(`/api/user/createUser`, { ...data });

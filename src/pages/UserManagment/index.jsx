@@ -19,6 +19,8 @@ const UserManagment = () => {
     dispatch(fetchUsers());
   }, []);
 
+  console.log(usersData);
+
   return (
     <div className="userManagment">
       <div className="userManagment__container">
@@ -48,12 +50,12 @@ const UserManagment = () => {
               </button>
             </div>
           </div>
-          {isOpen && <AddUser toggleForm={toggleForm} />}
         </div>
         <div className="userManagment__data">
-          <DataTable usersData={usersData}/>
+          <DataTable usersData={usersData} />
         </div>
       </div>
+      {isOpen && <AddUser toggleForm={toggleForm} />}
     </div>
   );
 };

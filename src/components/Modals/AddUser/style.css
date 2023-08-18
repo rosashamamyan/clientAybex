@@ -8,7 +8,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 99;
+    z-index: 1;
 }
 
 .addUser__container {
@@ -20,6 +20,7 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 30px;
+    z-index: 99;
 }
 
 .addUser__container-item {
@@ -141,4 +142,10 @@
 
 .activeTab {
     background-color: #D2BFFFFF;
+}
+
+.css-yrdy0g-MuiDataGrid-columnHeaderRow {
+    background-color: #050505;
+    color: white;
+    border: 2px solid white;
 }
