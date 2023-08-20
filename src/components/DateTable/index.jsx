@@ -5,7 +5,7 @@ import "./style.css";
 
 const DataTable = ({ usersData }) => {
   const columns = [
-    { field: "account_status", headerName: "Status", width: 100 },
+    { field: "account_status", headerName: "Status", width: 140 },
     { field: "firstName", headerName: "First Name", width: 200 },
     { field: "lastName", headerName: "Last Name", width: 200 },
     { field: "email", headerName: "Email", width: 200 },
@@ -13,7 +13,7 @@ const DataTable = ({ usersData }) => {
     {
       field: "address",
       headerName: "Address",
-      valueGetter: (params) => params.row.address.address,
+      valueGetter: (params) => params.row.address?.address,
       width: 200,
     },
     { field: "", headerName: "", width: 50 },
