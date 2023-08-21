@@ -5,18 +5,24 @@ import "./style.css";
 
 const DataTable = ({ usersData }) => {
   const columns = [
-    { field: "account_status", headerName: "Status", width: 100 },
-    { field: "firstName", headerName: "First Name", width: 200 },
-    { field: "lastName", headerName: "Last Name", width: 200 },
-    { field: "email", headerName: "Email", width: 200 },
+    {
+      field: "activated",
+      headerName: "Status",
+      valueGetter: (params) =>
+        params.row.userActive?.activated ? "active" : "deactive",
+      width: 140,
+    },
+    { field: "firstName", headerName: "First Name", width: 250 },
+    { field: "lastName", headerName: "Last Name", width: 250 },
+    { field: "email", headerName: "Email", width: 230 },
     { field: "phone", headerName: "Phone Number", width: 200 },
     {
       field: "address",
       headerName: "Address",
-      valueGetter: (params) => params.row.address.address,
+      valueGetter: (params) => params.row.address?.address,
       width: 200,
     },
-    { field: "", headerName: "", width: 50 },
+    { field: "", headerName: "", width: 70 },
   ];
 
   return (
@@ -29,10 +35,10 @@ const DataTable = ({ usersData }) => {
           getRowId={() => uuidv4()}
           initialState={{
             pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
+              paginationModel: { page: 0, pageSize: 10 },
             },
           }}
-          pageSizeOptions={[5, 10]}
+          pageSizeOptions={[10, 15]}
         />
       )}
     </>

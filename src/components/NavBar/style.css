@@ -13,10 +13,20 @@
     justify-content: start;
 }
 
+.navBar .menu-button {
+    margin: 0 20px;
+}
+
 .burger_button {
     font-size: 28px;
     color: #fff;
     margin: 10px;
     z-index: 1;
     cursor: pointer;
+}
+
+.navbar-pageName {
+   font-size: 20px;
+   font-weight: 600;
+   color: white;
 }

@@ -1,0 +1,71 @@
+.dashboard-block {
+   width: 500px;
+   height: 300px;
+   padding: 20px;
+   margin: 20px;
+   border-radius: 10px;
+   display: flex;
+   flex-direction: column;
+   justify-content: start;
+   align-items: start;
+}
+
+.dashboard-header {
+    display: flex;
+    align-items: center;
+}
+
+.dashboard-header small {
+    font-size: 25px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.dashboard-header svg {
+    font-size: 25px;
+}
+
+.dashboard-buttons {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard-buttons button {
+    min-width: 150px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.dashboard-line {
+    width: 450px;
+    background-color: #000;
+    height: 2px;
+}
+
+.darkMode {
+    background-color: #D2BFFFFF;
+    color: #000;
+}
+
+.darkMode button {
+    background-color: #000;
+    color: white;
+} 
+
+.lightMode {
+    background-color: #fff;
+}
+
+.lightMode button {
+    background-color: #D2BFFFFF;
+}

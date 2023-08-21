@@ -1,0 +1,75 @@
+.dashboard-block2 {
+    width: 500px;
+    height: 300px;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+}
+
+.dashboard2-header {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.dashboard2-header small {
+    font-size: 25px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.dashboard2-header svg {
+   font-size: 25px;
+}
+
+.dashboard2-button {
+    width: 100%;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard2-button button {
+    min-width: 150px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.lightMode {
+    background-color: #fff;
+}
+
+.dashboard-line2 {
+    width: 450px;
+    height: 2px;
+    margin-top: 20px;
+}
+
+.blackMode .dashboard-line2 {
+    background-color: #fff;
+}
+
+.lightMode .dashboard-line2 {
+    background-color: black;
+}
+
+.lightMode button {
+    background-color: #D2BFFFFF;
+}
+
+.blackMode {
+    background-color: #272425FF;
+    color: #fff;
+}

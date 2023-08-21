@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { TextField } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
-import MenuItem from "@mui/material/MenuItem";
 import SaveChanges from "../SaveChanges";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../../features/users/userSlice";
@@ -140,9 +139,13 @@ const AddUser = ({ toggleForm }) => {
                 <div className="form__inputs">
                   <TextField
                     label="Account Number"
-                    // sx={{ m: "0 30px 0 0" }}
+                    sx={{ m: "0 30px 0 0" }}
                     {...register("account_number", { required: true })}
                   />
+                  <select {...register("account_status", { required: true })} className="status-input" value={status} onChange={handleStatusChange}>
+                    <option value={0}>deactivted</option>
+                    <option value={1}>activated</option>
+                  </select>
                 </div>
                 <div className="tabs-buttons">
                   <button

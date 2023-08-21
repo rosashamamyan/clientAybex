@@ -8,7 +8,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1;
+    /* z-index: 1; */
 }
 
 .addUser__container {
@@ -20,7 +20,6 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 30px;
-    z-index: 99;
 }
 
 .addUser__container-item {
@@ -77,6 +76,14 @@
 }
 
 .dateInput {
+    height: 56px;
+    padding: 16.5px 14px;
+    border: 1px solid #BCBCBAFF;
+    border-radius: 4px;
+}
+
+.status-input {
+    width: 223px;
     height: 56px;
     padding: 16.5px 14px;
     border: 1px solid #BCBCBAFF;
@@ -142,10 +149,4 @@
 
 .activeTab {
     background-color: #D2BFFFFF;
-}
-
-.css-yrdy0g-MuiDataGrid-columnHeaderRow {
-    background-color: #050505;
-    color: white;
-    border: 2px solid white;
 }
