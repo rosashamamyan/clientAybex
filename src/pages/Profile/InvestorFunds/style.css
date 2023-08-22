@@ -1,0 +1,31 @@
+.investorFun {
+    width: 100%;
+    min-height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.investorFun-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.investorFun-item > div {
+    border: 3px solid black;
+    border-radius: 50%;
+    padding: 20px 22px;
+}
+
+.investorFun-item > div svg {
+    font-size: 40px;
+}
+
+.investorFun-item small {
+    font-size: 25px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-top: 15px;
+}

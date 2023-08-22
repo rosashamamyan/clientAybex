@@ -5,11 +5,12 @@ import { fetchUsers, selectUsers } from "../../features/users/userSlice";
 import AddUser from "../../components/Modals/AddUser"
 import DataTable from "../../components/DateTable";
 import "./style.css";
+import { Outlet } from "react-router-dom";
 
 const UserManagment = () => {
   const dispatch = useDispatch();
   const usersData = useSelector(selectUsers);
-  const [isOpen, setIsOpen] = useState(false);;
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleForm = () => {
     setIsOpen(!isOpen);

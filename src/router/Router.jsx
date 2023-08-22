@@ -17,6 +17,11 @@ import StrategyManagment from "../pages/StrategyManagment";
 import SubscriptionManagment from "../pages/SubscriptionManagment";
 import UserManagment from "../pages/UserManagment";
 import Dashboard from "../pages/DashBoard";
+import Profile from "../pages/Profile";
+import ContactInfo from "../pages/Profile/ContactInfo";
+import InvestorFunds from "../pages/Profile/InvestorFunds";
+import InvestorEntities from "../pages/Profile/InvestorEntities";
+import Documents from "../pages/Profile/Documents";
 function Router() {
   let element = useRoutes([
     {
@@ -89,8 +94,30 @@ function Router() {
          },
          {
             path: "userManagment",
-            element: <UserManagment />,
+            element:  <UserManagment />
          },
+         {
+            path: "userManagment/viewProfile/:id",
+            element: <Profile />,
+            children: [
+               {
+                  path: "",
+                  element: <ContactInfo />
+               },
+               {
+                  path: "investorFunds",
+                  element: <InvestorFunds />
+               },
+               {
+                  path: "investorEntities",
+                  element: <InvestorEntities />
+               },
+               {
+                  path: "documents",
+                  element: <Documents />
+               }
+            ]
+         }
       ]
     },
   ]);

@@ -1,0 +1,69 @@
+.profile {
+    width: 100vw;
+    min-height: calc(100vh - 60px);
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-container {
+    width: 80vw;
+    min-height: 80vh;
+}
+
+.profile-header {
+   display: flex;
+   justify-content: start;
+   align-items: center;
+}
+
+.profile-header svg {
+    font-size: 40px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.profile-header small {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.profile-tabs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profile-tabs .tabs {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.profile-tabs .tabs a{
+    text-decoration: none;
+    padding: 20px 70px;
+    border: none;
+    border-bottom: 2px solid black;
+    background-color: transparent;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.profile-tabs .editButton {
+    padding: 10px 12px;
+    border: 2px solid black;
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.profile-tabs .editButton svg {
+    font-size: 20px;
+} 
+
+.tabs a.active{
+   border-bottom: 5px solid #D2BFFFFF !important;
+}

@@ -1,9 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
+import {useNavigate} from 'react-router-dom'
 import { DataGrid } from "@mui/x-data-grid";
 import { v4 as uuidv4 } from "uuid";
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import "./style.css";
 
-const DataTable = ({ usersData }) => {
+const DataTable = ({ usersData, setIsEditOpen }) => {
+  const navigate = useNavigate()
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const ITEM_HEIGHT = 48;
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const viewProfile = (id) => {
+    setAnchorEl(null);
+    navigate(`viewProfile/${id}`);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  }
+  
+  const options = [
+    {id: 1, title: 'View Profile', action: viewProfile},
+    {id: 2, title: 'Reactivate account'},
+    {id: 3, title: 'Clear Notifications'}
+  ];
   const columns = [
     {
       field: "activated",
@@ -22,11 +50,53 @@ const DataTable = ({ usersData }) => {
       valueGetter: (params) => params.row.address?.address,
       width: 200,
     },
-    { field: "", headerName: "", width: 70 },
+    {
+      field: "",
+      headerName: "",
+      width: 70,
+      renderCell: (params) => (
+        <>
+          <IconButton
+            aria-label="more"
+            id="long-button"
+            aria-controls={open ? "long-menu" : undefined}
+            aria-expanded={open ? "true" : undefined}
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            id="long-menu"
+            MenuListProps={{
+              "aria-labelledby": "long-button",
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+              style: {
+                maxHeight: ITEM_HEIGHT * 4.5,
+                width: "20ch",
+              },
+            }}
+          >
+            {options.map((option) => (
+              <MenuItem
+                key={option.id}
+                onClick={() => option.action(params.row.id)}
+              >
+                {option.title}
+              </MenuItem>
+            ))}
+          </Menu>
+        </>
+      ),
+    },
   ];
 
   return (
-    <>
+    <div>
       {usersData && (
         <DataGrid
           className="dataTable"
@@ -41,7 +111,7 @@ const DataTable = ({ usersData }) => {
           pageSizeOptions={[10, 15]}
         />
       )}
-    </>
+    </div>
   );
 };
 
