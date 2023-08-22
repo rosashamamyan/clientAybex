@@ -19,8 +19,6 @@ const UserManagment = () => {
     dispatch(fetchUsers());
   }, []);
 
-  console.log(usersData);
-
   return (
     <div className="userManagment">
       <div className="userManagment__container">
