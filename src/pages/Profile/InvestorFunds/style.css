@@ -14,13 +14,13 @@
 }
 
 .investorFun-item > div {
-    border: 3px solid black;
+    background-color: #fff;
     border-radius: 50%;
-    padding: 20px 22px;
+    padding: 40px 42px;
 }
 
 .investorFun-item > div svg {
-    font-size: 40px;
+    font-size: 50px;
 }
 
 .investorFun-item small {

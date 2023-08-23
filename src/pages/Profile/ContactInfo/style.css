@@ -1,0 +1,68 @@
+.contactInfo {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: start;
+}
+
+.contactInfo > div {
+   margin: 25px;
+   background-color: #fff;
+   padding: 30px;
+   border-radius: 10px;
+}
+
+.contactInfo .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.info > div {
+    width: 100%;
+}
+
+.info .profpic {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.info .userData > div {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin: 30px 0;
+} 
+
+.userData > div small {
+    font-size: 20px;
+    
+}
+
+.contactInfo .date {
+    min-height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contactInfo .date small {
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 70px;
+}
+
+.contactInfo .date button {
+    background-color: #D2BFFFFF;
+    padding: 12px 33px;
+    border: none;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 800;
+    cursor: pointer; 
+}

@@ -6,11 +6,13 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import CryptoJS from 'crypto-js';
 import "./style.css";
 
-const DataTable = ({ usersData, setIsEditOpen }) => {
+const DataTable = ({ usersData }) => {
   const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = useState(null);
+  const [userId, setUserId] = useState(null)
   const open = Boolean(anchorEl);
   const ITEM_HEIGHT = 48;
 
@@ -20,12 +22,13 @@ const DataTable = ({ usersData, setIsEditOpen }) => {
 
   const viewProfile = (id) => {
     setAnchorEl(null);
-    navigate(`viewProfile/${id}`);
+    navigate(`viewProfile/${id}/contactInfo`);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   }
+  
   
   const options = [
     {id: 1, title: 'View Profile', action: viewProfile},
@@ -84,7 +87,7 @@ const DataTable = ({ usersData, setIsEditOpen }) => {
             {options.map((option) => (
               <MenuItem
                 key={option.id}
-                onClick={() => option.action(params.row.id)}
+                onClick={() => option.action(userId)}
               >
                 {option.title}
               </MenuItem>
@@ -103,6 +106,9 @@ const DataTable = ({ usersData, setIsEditOpen }) => {
           rows={usersData}
           columns={columns}
           getRowId={() => uuidv4()}
+          onRowClick = {(rowData) => {
+            setUserId(rowData.row.id)
+          }}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 10 },

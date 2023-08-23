@@ -103,7 +103,11 @@ function Router() {
                {
                   path: "",
                   element: <ContactInfo />
-               },
+                },
+                {
+                  path: "contactInfo",
+                  element: <ContactInfo />
+                },
                {
                   path: "investorFunds",
                   element: <InvestorFunds />

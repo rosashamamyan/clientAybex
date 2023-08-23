@@ -1,7 +1,7 @@
 import React from 'react'
 import './style.css'
 
-const SaveChanges = ({toggleSaveModal, handleSave}) => {
+const SaveChanges = ({toggleSaveModal, handleOk}) => {
   return (
     <div className="savechanges">
       <div className='savechanges-container'>
@@ -12,8 +12,8 @@ const SaveChanges = ({toggleSaveModal, handleSave}) => {
           <small>Are you sure you want to continue?</small>
         </div>
         <div className="buttons">
-          <button className='cancelButton' onClick={() => toggleSaveModal(false)}>cancel</button>
-          <button className='okButton' onClick={handleSave}>ok</button>
+          <button className='cancelButton' onClick={toggleSaveModal}>cancel</button>
+          <button className='okButton' onClick={handleOk}>ok</button>
         </div>
       </div>
     </div>

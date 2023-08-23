@@ -11,7 +11,6 @@ const AddUser = ({ toggleForm }) => {
   const [isShow, setIsShow] = useState(true);
   const [isSaveOpen, setIsSaveOpen] = useState(false)
   const [status, setStatus] = useState("");
-  const [formData, setFormData] = useState({})
   const dispatch = useDispatch()
 
   const handleShow = () => {
@@ -26,16 +25,15 @@ const AddUser = ({ toggleForm }) => {
    console.log(newDate);
   };
 
-  const handleSave = async() => {
-    dispatch(addUser(formData))
-    toggleSaveModal(false)
-    reset()
+  const toggleSaveModal = () => {
+     setIsSaveOpen(!isSaveOpen)
+  }
+
+  const handleOk = async() => {
+    toggleSaveModal()
     toggleForm()
   } 
 
-  const toggleSaveModal = (bool) => {
-     setIsSaveOpen(bool)
-  }
 
   const {
     register,
@@ -45,7 +43,9 @@ const AddUser = ({ toggleForm }) => {
   } = useForm();
 
   const onSubmit = (data) => {
-    setFormData({...data})
+    dispatch(addUser(data))
+    reset()
+    toggleForm()
   };
 
   return (
@@ -54,7 +54,7 @@ const AddUser = ({ toggleForm }) => {
         <div className="addUser__container-header">
           <div>Add New User</div>
           <div className="cancel-icon">
-            <ClearIcon onClick={toggleForm} />
+            <ClearIcon onClick={toggleSaveModal} />
           </div>
         </div>
         <div className="addUser__container-numbers">
@@ -150,7 +150,8 @@ const AddUser = ({ toggleForm }) => {
                 <div className="tabs-buttons">
                   <button
                     className="purple-button"
-                    onClick={() => toggleSaveModal(true)}
+                    type="submit"
+                    // onClick={() => toggleSaveModal(true)}
                   >
                     save
                   </button>
@@ -165,8 +166,7 @@ const AddUser = ({ toggleForm }) => {
         {isSaveOpen && (
           <SaveChanges
             toggleSaveModal={toggleSaveModal}
-            isSaveOpen={isSaveOpen}
-            handleSave={handleSave}
+            handleOk={handleOk}
           />
         )}
       </div>

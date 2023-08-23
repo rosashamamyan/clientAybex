@@ -1,18 +1,27 @@
-import React, { useState } from 'react'
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, NavLink, Outlet, useParams } from 'react-router-dom';
 import {IoChevronBackCircleOutline} from "react-icons/io5"
 import {BiSolidPencil} from "react-icons/bi"
-import './style.css'
 import EditUser from '../../components/EditUser';
+import { getUserData, selectUser } from '../../features/users/userSlice';
+import './style.css'
 
 const Profile = () => {
   const [isEditOpen, setIsEditOpen] = useState(false)
-  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const userData = useSelector(selectUser)
+  const params = useParams()
 
   const toggleEditModal = () => {
-     setIsEditOpen(!isEditOpen)
+    setIsEditOpen(!isEditOpen)
   }
 
+  useEffect(() => {
+    dispatch(getUserData(params.id))
+  }, [])
+  
+  const {firstName, lastName, email, phone, dob, address} = userData
   return (
     <div className="profile">
       <div className="profile-container">
@@ -24,12 +33,8 @@ const Profile = () => {
         </div>
         <div className="profile-tabs">
           <div className="tabs">
-            {/* <button onClick={() => navigateTo("")}>Contact Info</button>
-            <button onClick={() => navigateTo("investorFunds")}>Investor Funds</button>
-            <button onClick={() => navigateTo("investorEntities")}>Investor Entities</button>
-            <button onClick={() => navigateTo("documents")}>Documents</button> */}
               <NavLink
-                to=""
+                to="contactInfo"
                 className={({ isActive }) =>
                   isActive ? "active" : ""
                 }
@@ -67,11 +72,11 @@ const Profile = () => {
             </button>
           </div>
         </div>
-        <div>
+        <div className='outlet'>
           <Outlet />
         </div>
       </div>
-      {isEditOpen && <EditUser toggleEditModal={toggleEditModal} />}
+      {isEditOpen && <EditUser toggleEditModal={toggleEditModal} userData={userData}/>}
     </div>
   );
 }
