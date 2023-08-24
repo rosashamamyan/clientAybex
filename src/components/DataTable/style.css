@@ -7,3 +7,11 @@
     color: white;
     border: 2px solid white;
 }
+
+.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+    box-shadow: none !important;
+}
+
+.MuiDataGrid-columnSeparator {
+    display: none !important;
+}

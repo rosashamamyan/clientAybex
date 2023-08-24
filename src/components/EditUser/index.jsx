@@ -3,15 +3,16 @@ import { useDispatch } from "react-redux";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useForm } from "react-hook-form";
 import { TextField } from "@mui/material";
-import './style.css'
 import SaveChanges from '../Modals/SaveChanges';
-import { updateUserData } from '../../features/users/userSlice';
+import { getUserData, updateUserData } from '../../features/users/userSlice';
+import './style.css'
+import Swal from 'sweetalert2';
 
 const EditUser = ({toggleEditModal, userData}) => {
   const dispatch = useDispatch()
   const [isOpenSave, setIsOpenSave] = useState(false)
 
-  const {firstName, lastName, email, phone, dob, address} = userData
+  const {id, firstName, lastName, email, phone, dob, address} = userData
   const {country, city, postal_code, state} = address
   
   const handleDateChange = (newDate) => {
@@ -21,7 +22,7 @@ const EditUser = ({toggleEditModal, userData}) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty, isValid  },
     reset,
   } = useForm({
     defaultValues: {
@@ -46,8 +47,14 @@ const EditUser = ({toggleEditModal, userData}) => {
   }
 
   const onSubmit = (data) => {
-    dispatch(updateUserData(data))
+    dispatch(updateUserData({...data, id}))
+    dispatch(getUserData(id))
     toggleEditModal()
+    Swal.fire({
+      icon: 'success',
+      title: 'Done',
+      text: 'User successfully updated',
+    })
   };
 
 
@@ -120,7 +127,7 @@ const EditUser = ({toggleEditModal, userData}) => {
             </div>
           </div>
           <div className="editUser-button">
-            <button>save</button>
+            <button disabled={!isDirty}>save</button>
           </div>
         </form>
         {

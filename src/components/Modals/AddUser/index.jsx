@@ -10,6 +10,30 @@ import "./style.css";
 const AddUser = ({ toggleForm }) => {
   const [isShow, setIsShow] = useState(true);
   const [isSaveOpen, setIsSaveOpen] = useState(false)
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    address: "",
+    state: "",
+    country: "",
+    phone: "",
+    city: "",
+    postal_code: "",
+    dob: "",
+  });
+  const {
+    firstName,
+    lastName,
+    email,
+    address,
+    state,
+    country,
+    phone,
+    city,
+    postal_code,
+    dob,
+  } = form;
   const [status, setStatus] = useState("");
   const dispatch = useDispatch()
 
@@ -34,19 +58,23 @@ const AddUser = ({ toggleForm }) => {
     toggleForm()
   } 
 
+  const handleSubmit = () => {
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
+  }
 
-  const onSubmit = (data) => {
-    dispatch(addUser(data))
-    reset()
-    toggleForm()
-  };
+
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  //   reset,
+  // } = useForm();
+
+  // const onSubmit = (data) => {
+  //   dispatch(addUser(data))
+  //   reset()
+  //   toggleForm()
+  // };
 
   return (
     <div className="addUser">
@@ -67,7 +95,7 @@ const AddUser = ({ toggleForm }) => {
               2
             </div>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)} className="addUser__forms">
+          <form onSubmit={handleSubmit} className="addUser__forms">
             {isShow ? (
               <>
                 <div className="addUser__form">
@@ -75,48 +103,52 @@ const AddUser = ({ toggleForm }) => {
                     <TextField
                       label="First Name*"
                       sx={{ m: "0 0 30px 0" }}
-                      {...register("firstName", { required: true })}
+                      // {...register("firstName", { required: true })}
+                      value={firstName}
+                      onChange={(e) =>
+                        setForm({ ...form, firstName: e.target.value })
+                      }
                     />
                     <TextField
                       label="Email"
                       sx={{ m: "0 0 30px 0" }}
-                      {...register("email", { required: true })}
+                      // {...register("email", { required: true })}
                     />
                     <TextField
                       label="Street Address"
                       sx={{ m: "0 0 30px 0" }}
-                      {...register("address", { required: true })}
+                      // {...register("address", { required: true })}
                     />
                     <TextField
                       label="State/Region"
                       sx={{ m: "0 0 30px 0" }}
-                      {...register("state", { required: true })}
+                      // {...register("state", { required: true })}
                     />
                     <TextField
                       label="Country"
-                      {...register("country", { required: true })}
+                      // {...register("country", { required: true })}
                     />
                   </div>
                   <div className="form">
                     <TextField
                       label="Last Name*"
                       sx={{ m: "0 0 30px 0" }}
-                      {...register("lastName", { required: true })}
+                      // {...register("lastName", { required: true })}
                     />
                     <TextField
                       label="Phone Number"
                       sx={{ m: "0 0 30px 0" }}
-                      {...register("phone", { required: true })}
+                      // {...register("phone", { required: true })}
                     />
                     <TextField
                       label="City"
                       sx={{ m: "0 0 30px 0" }}
-                      {...register("city", { required: true })}
+                      // {...register("city", { required: true })}
                     />
                     <TextField
                       label="Postal Code"
                       sx={{ m: "0 0 30px 0" }}
-                      {...register("postal_code", { required: true })}
+                      // {...register("postal_code", { required: true })}
                     />
                     <input
                       type="date"
@@ -124,7 +156,7 @@ const AddUser = ({ toggleForm }) => {
                       onChange={(newDate) => {
                         handleDateChange(newDate.toISOString());
                       }}
-                      {...register("dob", { required: true })}
+                      // {...register("dob", { required: true })}
                     />
                   </div>
                 </div>
@@ -140,9 +172,14 @@ const AddUser = ({ toggleForm }) => {
                   <TextField
                     label="Account Number"
                     sx={{ m: "0 30px 0 0" }}
-                    {...register("account_number", { required: true })}
+                    // {...register("account_number", { required: true })}
                   />
-                  <select {...register("account_status", { required: true })} className="status-input" value={status} onChange={handleStatusChange}>
+                  <select
+                    // {...register("account_status", { required: true })}
+                    className="status-input"
+                    value={status}
+                    onChange={handleStatusChange}
+                  >
                     <option value={0}>deactivted</option>
                     <option value={1}>activated</option>
                   </select>
@@ -164,10 +201,7 @@ const AddUser = ({ toggleForm }) => {
           </form>
         </div>
         {isSaveOpen && (
-          <SaveChanges
-            toggleSaveModal={toggleSaveModal}
-            handleOk={handleOk}
-          />
+          <SaveChanges toggleSaveModal={toggleSaveModal} handleOk={handleOk} />
         )}
       </div>
     </div>

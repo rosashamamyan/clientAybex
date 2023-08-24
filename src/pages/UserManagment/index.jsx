@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {IoMdDownload} from "react-icons/io"
 import { fetchUsers, selectUsers } from "../../features/users/userSlice";
 import AddUser from "../../components/Modals/AddUser"
-import DataTable from "../../components/DateTable";
+import DataTable from "../../components/DataTable";
 import "./style.css";
 
 const UserManagment = () => {
@@ -20,7 +20,7 @@ const UserManagment = () => {
   }, []);
 
   return (
-    <div className="userManagment">
+    <div className="container">
       <div className="userManagment__container">
         <div className="userManagment__control">
           <div className="userManagment__control-header">User Managment</div>

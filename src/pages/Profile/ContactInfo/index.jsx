@@ -29,7 +29,9 @@ const ContactInfo = () => {
   return (
     <div className="contactInfo">
       <div className="info">
-        <div className="profpic">profpic</div>
+        {/* <div className="profpic">
+          
+        </div> */}
         <div className="userData">
           <div>
             <small>
