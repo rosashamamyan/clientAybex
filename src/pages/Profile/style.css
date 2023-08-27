@@ -1,6 +1,6 @@
 .profile {
-    width: 100vw;
-    min-height: calc(100vh - 60px);
+    /* width: 100vw;
+    min-height: calc(100vh - 60px); */
     background-color: #E5E5E5FF;
     padding: 50px;
     display: flex;
@@ -10,7 +10,7 @@
 
 .profile-container {
     width: 80vw;
-    min-height: 80vh;
+    /* min-height: 80vh; */
 }
 
 .profile-container .outlet {

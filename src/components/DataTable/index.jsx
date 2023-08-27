@@ -39,7 +39,7 @@ const DataTable = ({ usersData }) => {
       field: "activated",
       headerName: "Status",
       valueGetter: (params) =>
-        params.row.userActive?.activated ? "active" : "deactive",
+        params.row.userActive?.activated ? "active" : "inactive",
       width: 140,
     },
     { field: "firstName", headerName: "First Name", width: 250 },
@@ -84,10 +84,7 @@ const DataTable = ({ usersData }) => {
             }}
           >
             {options.map((option) => (
-              <MenuItem
-                key={option.id}
-                onClick={() => option.action(userId)}
-              >
+              <MenuItem key={option.id} onClick={() => option.action(userId)}>
                 {option.title}
               </MenuItem>
             ))}

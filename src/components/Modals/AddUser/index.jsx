@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 import { TextField } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs'
 import SaveChanges from "../SaveChanges";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../../features/users/userSlice";
 import "./style.css";
 
 const AddUser = ({ toggleForm }) => {
+  const dispatch = useDispatch()
   const [isShow, setIsShow] = useState(true);
   const [isSaveOpen, setIsSaveOpen] = useState(false)
   const [form, setForm] = useState({
@@ -21,6 +25,8 @@ const AddUser = ({ toggleForm }) => {
     city: "",
     postal_code: "",
     dob: "",
+    account_number: "",
+    status: ""
   });
   const {
     firstName,
@@ -33,20 +39,14 @@ const AddUser = ({ toggleForm }) => {
     city,
     postal_code,
     dob,
+    account_number,
+    status
   } = form;
-  const [status, setStatus] = useState("");
-  const dispatch = useDispatch()
+
+  console.log(form);
 
   const handleShow = () => {
     setIsShow(!isShow);
-  };
-  
-  const handleStatusChange = (event) => {
-    setStatus(event.target.value);
-  };
-
-  const handleDateChange = (newDate) => {
-   console.log(newDate);
   };
 
   const toggleSaveModal = () => {
@@ -59,22 +59,9 @@ const AddUser = ({ toggleForm }) => {
   } 
 
   const handleSubmit = () => {
-
+    dispatch(addUser(form))
+    toggleForm()
   }
-
-
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  //   reset,
-  // } = useForm();
-
-  // const onSubmit = (data) => {
-  //   dispatch(addUser(data))
-  //   reset()
-  //   toggleForm()
-  // };
 
   return (
     <div className="addUser">
@@ -103,7 +90,6 @@ const AddUser = ({ toggleForm }) => {
                     <TextField
                       label="First Name*"
                       sx={{ m: "0 0 30px 0" }}
-                      // {...register("firstName", { required: true })}
                       value={firstName}
                       onChange={(e) =>
                         setForm({ ...form, firstName: e.target.value })
@@ -112,52 +98,84 @@ const AddUser = ({ toggleForm }) => {
                     <TextField
                       label="Email"
                       sx={{ m: "0 0 30px 0" }}
-                      // {...register("email", { required: true })}
+                      value={email}
+                      onChange={(e) =>
+                        setForm({ ...form, email: e.target.value })
+                      }
                     />
                     <TextField
                       label="Street Address"
                       sx={{ m: "0 0 30px 0" }}
-                      // {...register("address", { required: true })}
+                      value={address}
+                      onChange={(e) =>
+                        setForm({ ...form, address: e.target.value })
+                      }
                     />
                     <TextField
                       label="State/Region"
                       sx={{ m: "0 0 30px 0" }}
-                      // {...register("state", { required: true })}
+                      value={state}
+                      onChange={(e) =>
+                        setForm({ ...form, state: e.target.value })
+                      }
                     />
                     <TextField
                       label="Country"
-                      // {...register("country", { required: true })}
+                      value={country}
+                      onChange={(e) =>
+                        setForm({ ...form, country: e.target.value })
+                      }
                     />
                   </div>
                   <div className="form">
                     <TextField
                       label="Last Name*"
                       sx={{ m: "0 0 30px 0" }}
-                      // {...register("lastName", { required: true })}
+                      value={lastName}
+                      onChange={(e) =>
+                        setForm({ ...form, lastName: e.target.value })
+                      }
                     />
                     <TextField
                       label="Phone Number"
                       sx={{ m: "0 0 30px 0" }}
-                      // {...register("phone", { required: true })}
+                      value={phone}
+                      onChange={(e) =>
+                        setForm({ ...form, phone: e.target.value })
+                      }
                     />
                     <TextField
                       label="City"
                       sx={{ m: "0 0 30px 0" }}
-                      // {...register("city", { required: true })}
+                      value={city}
+                      onChange={(e) =>
+                        setForm({ ...form, city: e.target.value })
+                      }
                     />
                     <TextField
                       label="Postal Code"
                       sx={{ m: "0 0 30px 0" }}
-                      // {...register("postal_code", { required: true })}
+                      value={postal_code}
+                      onChange={(e) =>
+                        setForm({ ...form, postal_code: e.target.value })
+                      }
                     />
-                    <input
+                    {/* <input
                       type="date"
                       className="dateInput"
-                      onChange={(newDate) => {
-                        handleDateChange(newDate.toISOString());
+                      value={dob}
+                      onChange={(e) => {
+                        setForm({ ...form, dob: e.target.value });
                       }}
-                      // {...register("dob", { required: true })}
-                    />
+                    /> */}
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DatePicker
+                        inputFormat="DD.MM.YYYY"
+                        label="DOB"
+                        value={dob ? dayjs(dob, 'YYYY-MM-DD').toDate() : ""}
+                        onChange={(newValue) => setForm({ ...form, dob: newValue ? dayjs(newValue).format('YYYY-MM-DD') : "" })}
+                      />
+                    </LocalizationProvider>
                   </div>
                 </div>
                 <div className="tabs-buttons">
@@ -172,24 +190,24 @@ const AddUser = ({ toggleForm }) => {
                   <TextField
                     label="Account Number"
                     sx={{ m: "0 30px 0 0" }}
-                    // {...register("account_number", { required: true })}
+                    value={account_number}
+                    onChange={(e) =>
+                      setForm({ ...form, account_number: e.target.value })
+                    }
                   />
                   <select
-                    // {...register("account_status", { required: true })}
                     className="status-input"
                     value={status}
-                    onChange={handleStatusChange}
+                    onChange={(e) =>
+                      setForm({ ...form, status: e.target.value })
+                    }
                   >
                     <option value={0}>deactivted</option>
                     <option value={1}>activated</option>
                   </select>
                 </div>
                 <div className="tabs-buttons">
-                  <button
-                    className="purple-button"
-                    type="submit"
-                    // onClick={() => toggleSaveModal(true)}
-                  >
+                  <button className="purple-button" type="submit">
                     save
                   </button>
                   <button onClick={handleShow} className="white-button">
@@ -208,32 +226,3 @@ const AddUser = ({ toggleForm }) => {
   );
 };
 export default AddUser;
-
-
-
-
-
-
-              {/* <TextField
-                value={status}
-                onChange={(e) => handleStatusChange(e)}
-                select
-                {...register("account_status", { required: true })}
-                label="Acount Status"
-              >
-                <MenuItem value={1}>activated</MenuItem>
-                <MenuItem value={0}>deactivated</MenuItem>
-              </TextField> */}
-              {
-                /* <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={status}
-                label="Age"
-                onChange={(e) => handleStatusChange(e)}
-                {...register("account_status", { required: false })}
-              >
-              <MenuItem value={10}>activated</MenuItem>
-              <MenuItem value={20}>deactivated</MenuItem>
-            </Select> */
-              }
