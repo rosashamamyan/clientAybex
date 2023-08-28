@@ -22,6 +22,8 @@ import ContactInfo from "../pages/Profile/ContactInfo";
 import InvestorFunds from "../pages/Profile/InvestorFunds";
 import InvestorEntities from "../pages/Profile/InvestorEntities";
 import Documents from "../pages/Profile/Documents";
+import AddEditStrategy from "../pages/AddEditStrategy";
+import StrategyOverView from "../pages/AddEditStrategy/StrategyOverview";
 function Router() {
   let element = useRoutes([
     {
@@ -119,6 +121,16 @@ function Router() {
                {
                   path: "documents",
                   element: <Documents />
+               }
+            ]
+         },
+         {
+            path: "strategyManagment/addEditStrategy/:id",
+            element: <AddEditStrategy />,
+            children: [
+               {
+                  path: "",
+                  element: <StrategyOverView />
                }
             ]
          }

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getStrategies, getStrategyTypes } from "../../service/Strategy";
+import { createStrategy, getStrategies, getStrategyTypes } from "../../service/Strategy";
 
 const initialState = {
     strategies: [],
@@ -16,6 +16,11 @@ export const getStrategyTypesData = createAsyncThunk("strategy/getStrategyTypes"
     return strategyTypes
 })
 
+export const createStrategyData = createAsyncThunk("strategy/createStrategy", async (formData) => {
+    const createdStrategy = await createStrategy(formData)
+    return createdStrategy
+})
+
 const strategySlice = createSlice({
     name: "strategies",
     initialState,
@@ -25,6 +30,8 @@ const strategySlice = createSlice({
            state.strategies = action.payload.data
         }).addCase(getStrategyTypesData.fulfilled, (state, action) => {
             state.strategyTypes = action.payload.data
+        }).addCase(createStrategyData.fulfilled, (state, action) => {
+            state.strategies.push(action.payload.data)
         })
     }
 })

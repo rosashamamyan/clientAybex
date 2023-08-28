@@ -4,11 +4,13 @@ import { getStrategiesData, getStrategyTypesData, selectStrategies, selectStrate
 import StrategyTable from '../../components/Strategy/StrategyTable';
 import './style.css'
 import StrategyTypesDropDown from '../../components/Strategy/StrategyTypesMenu';
+import { useNavigate } from 'react-router-dom';
 
 const StrategyManagment = () => {
   const strategiesData = useSelector(selectStrategies)
   const strategyTypesData = useSelector(selectStrategyTypes)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
      dispatch(getStrategiesData())

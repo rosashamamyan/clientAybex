@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import { TextField } from "@mui/material";
 import SaveChanges from '../Modals/SaveChanges';
 import { getUserData, updateUserData } from '../../features/users/userSlice';
-import './style.css'
 import Swal from 'sweetalert2';
+import './style.css'
 
 const EditUser = ({toggleEditModal, userData}) => {
   const dispatch = useDispatch()

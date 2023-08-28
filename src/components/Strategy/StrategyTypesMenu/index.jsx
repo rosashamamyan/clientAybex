@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import './styles.css'
+import { useNavigate } from 'react-router-dom';
 
 const StrategyTypesDropDown = ({strategyTypesData}) => {
+  const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -12,6 +14,10 @@ const StrategyTypesDropDown = ({strategyTypesData}) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const viewStrategy = (id) => {
+    setAnchorEl(null);
+    navigate(`addEditStrategy/${id}`)
+  }
 
   return (
     <div>
@@ -37,7 +43,7 @@ const StrategyTypesDropDown = ({strategyTypesData}) => {
         {
           strategyTypesData.map((elm) => {
             const {id, name} = elm
-            return <MenuItem key={id} onClick={handleClose}>{name}</MenuItem>
+            return <MenuItem key={id} onClick={() => viewStrategy('-')}>{name}</MenuItem>
           })
         }
       </Menu>

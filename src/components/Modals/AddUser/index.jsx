@@ -7,7 +7,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs'
 import SaveChanges from "../SaveChanges";
 import { useDispatch } from "react-redux";
-import { addUser } from "../../../features/users/userSlice";
+import { addUser, fetchUsers } from "../../../features/users/userSlice";
 import "./style.css";
 
 const AddUser = ({ toggleForm }) => {
@@ -43,8 +43,6 @@ const AddUser = ({ toggleForm }) => {
     status
   } = form;
 
-  console.log(form);
-
   const handleShow = () => {
     setIsShow(!isShow);
   };
@@ -60,6 +58,7 @@ const AddUser = ({ toggleForm }) => {
 
   const handleSubmit = () => {
     dispatch(addUser(form))
+    dispatch(fetchUsers());
     toggleForm()
   }
 

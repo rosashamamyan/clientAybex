@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {useNavigate} from 'react-router-dom'
+import {useDispatch} from "react-redux"
 import {AiOutlineDrag} from "react-icons/ai"
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
@@ -10,8 +11,9 @@ import { v4 as uuidv4 } from "uuid";
 
 const StrategyTable = ({strategiesData}) => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [anchorEl, setAnchorEl] = useState(null);
-  // const [userId, setUserId] = useState(null)
+  const [strategyId, setStrategyId] = useState(null)
   const open = Boolean(anchorEl);
   const ITEM_HEIGHT = 48;
 
@@ -21,6 +23,7 @@ const StrategyTable = ({strategiesData}) => {
 
   const viewStrategy = () => {
     setAnchorEl(null);
+    navigate(`addEditStrategy/${strategyId}`)
   };
 
   const handleClose = () => {
@@ -38,6 +41,7 @@ const StrategyTable = ({strategiesData}) => {
       field: "icon",
       headerName: "Icon",
       width: 200,
+      renderCell: (params) => <img style={{width: "50px"}} alt="strategy icon" src={params.row?.icon}/>,
     },
     {
       field: "strategy_name",
@@ -57,7 +61,7 @@ const StrategyTable = ({strategiesData}) => {
       width: 200,
     },
     {
-      field: "color",
+      field: "primary_color",
       headerName: "Colors",
       width: 200,
     },
@@ -67,7 +71,7 @@ const StrategyTable = ({strategiesData}) => {
       width: 240,
     },
     {
-      field: "order",
+      field: "sequence",
       headerName: "Sequence",
       width: 120
     },
@@ -102,7 +106,7 @@ const StrategyTable = ({strategiesData}) => {
               },
             }}
           >
-            <MenuItem onClick={viewStrategy}>MenuItem1</MenuItem>
+            <MenuItem onClick={viewStrategy}>edit</MenuItem>
             <MenuItem onClick={viewStrategy}>MenuItem2</MenuItem>
             <MenuItem onClick={viewStrategy}>MenuItem3</MenuItem>
           </Menu>
@@ -120,9 +124,9 @@ const StrategyTable = ({strategiesData}) => {
           rows={strategiesData}
           columns={columns}
           getRowId={() => uuidv4()}
-          // onRowClick = {(rowData) => {
-          //   setUserId(rowData.row.id)
-          // }}
+          onRowClick = {(rowData) => {
+            setStrategyId(rowData.row.id)
+          }}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 10 },

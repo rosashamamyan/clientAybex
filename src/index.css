@@ -20,9 +20,23 @@ a {
 }
 
 .purple-button {
+    min-width: 120px;
     padding: 8px 15px;
     margin: 0 10px 5px 0;
     background-color: #D2BFFFFF;
+    border: none;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.white-button {
+    min-width: 120px;
+    padding: 8px 15px;
+    margin: 0 10px 5px 0;
+    background-color: #fff;
     border: none;
     border-radius: 10px;
     text-transform: uppercase;

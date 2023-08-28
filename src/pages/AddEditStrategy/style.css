@@ -1,5 +1,4 @@
-.profile {
-    width: 100vw;
+.strategy {
     min-height: calc(100vh - 60px);
     background-color: #E5E5E5FF;
     padding: 50px;
@@ -8,45 +7,48 @@
     align-items: center;
 }
 
-.profile-container {
+.strategy-container {
     width: 80vw;
     min-height: 80vh;
 }
 
-.profile-container .outlet {
+.strategy-container .outlet {
     padding: 20px;
 }
 
-.profile-header {
+.strategy-header {
    display: flex;
    justify-content: start;
    align-items: center;
 }
 
-.profile-header svg {
+.strategy-header svg {
     font-size: 40px;
     margin-right: 10px;
     cursor: pointer;
 }
 
-.profile-header small {
+.strategy-header small {
     font-size: 20px;
     font-weight: 700;
 }
 
-.profile-tabs {
+.strategy-tabs {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.profile-tabs .tabs {
+.strategy-tabs .tabs {
+    width: 100%;
     margin-top: 30px;
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
 }
 
-.profile-tabs .tabs a{
+.strategy-tabs .tabs a{
+    text-align: center;
     text-decoration: none;
     padding: 20px 70px;
     border: none;
@@ -57,7 +59,7 @@
     cursor: pointer;
 }
 
-.profile-tabs .editButton {
+.strategy-tabs .editButton {
     padding: 10px 12px;
     border: 2px solid black;
     border-radius: 50%;
@@ -65,10 +67,15 @@
     cursor: pointer;
 }
 
-.profile-tabs .editButton svg {
+.strategy-tabs .editButton svg {
     font-size: 20px;
 } 
 
 .tabs a.active{
    border-bottom: 5px solid #D2BFFFFF !important;
+}
+
+.disabledLink {
+    color: gray;
+    border-bottom: 2px solid gray !important;
 }
