@@ -32,14 +32,14 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
-      state.users = action.payload.data;
+      state.users = action.payload?.data;
     }).addCase(
       addUser.fulfilled, (state, action) => {
-        state.users.push(action.payload.data)
+        state.users.push(action.payload?.data)
       }
     ).addCase(
       getUserData.fulfilled, (state, action) => {
-        state.user = action.payload.data
+        state.user = action.payload?.data
       }
     )
   },

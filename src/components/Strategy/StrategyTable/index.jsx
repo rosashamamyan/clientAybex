@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { DataGrid } from "@mui/x-data-grid";
 import { v4 as uuidv4 } from "uuid";
+import { getStrategyData } from "../../../features/strategy/strategySlice";
 
 const StrategyTable = ({strategiesData}) => {
   const navigate = useNavigate()
@@ -21,7 +22,7 @@ const StrategyTable = ({strategiesData}) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const viewStrategy = () => {
+  const viewStrategy =  () => {
     setAnchorEl(null);
     navigate(`addEditStrategy/${strategyId}`)
   };
@@ -107,8 +108,8 @@ const StrategyTable = ({strategiesData}) => {
             }}
           >
             <MenuItem onClick={viewStrategy}>edit</MenuItem>
-            <MenuItem onClick={viewStrategy}>MenuItem2</MenuItem>
-            <MenuItem onClick={viewStrategy}>MenuItem3</MenuItem>
+            {/* <MenuItem onClick={viewStrategy}>MenuItem2</MenuItem>
+            <MenuItem onClick={viewStrategy}>MenuItem3</MenuItem> */}
           </Menu>
         </>
       ),

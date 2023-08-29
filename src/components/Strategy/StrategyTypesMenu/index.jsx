@@ -14,9 +14,9 @@ const StrategyTypesDropDown = ({strategyTypesData}) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const viewStrategy = (id) => {
+  const viewStrategy = () => {
     setAnchorEl(null);
-    navigate(`addEditStrategy/${id}`)
+    navigate(`addEditStrategy`)
   }
 
   return (
@@ -41,9 +41,9 @@ const StrategyTypesDropDown = ({strategyTypesData}) => {
         }}
       >
         {
-          strategyTypesData.map((elm) => {
+          strategyTypesData?.map((elm) => {
             const {id, name} = elm
-            return <MenuItem key={id} onClick={() => viewStrategy('-')}>{name}</MenuItem>
+            return <MenuItem key={id} onClick={viewStrategy}>{name}</MenuItem>
           })
         }
       </Menu>

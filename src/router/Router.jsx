@@ -133,6 +133,16 @@ function Router() {
                   element: <StrategyOverView />
                }
             ]
+         },
+         {
+            path: "strategyManagment/addEditStrategy",
+            element: <AddEditStrategy />,
+            children: [
+               {
+                  path: "",
+                  element: <StrategyOverView />
+               }
+            ]
          }
       ]
     },

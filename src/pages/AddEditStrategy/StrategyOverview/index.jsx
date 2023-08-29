@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {BsFillPlusCircleFill} from "react-icons/bs"
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createStrategyData, getStrategiesData, getStrategyTypesData, selectStrategies, selectStrategyTypes } from '../../../features/strategy/strategySlice';
+import { createStrategyData, editStrategyData, getStrategiesData, getStrategyData, getStrategyTypesData, selectStrategies, selectStrategy, selectStrategyTypes } from '../../../features/strategy/strategySlice';
 import { useForm } from "react-hook-form";
 import { TextField } from "@mui/material";
 import Textarea from '@mui/joy/Textarea';
@@ -11,8 +12,11 @@ import './style.css'
 
 const StrategyOverView = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const params = useParams()
   const strategyTypesData = useSelector(selectStrategyTypes)
   const strategiesData = useSelector(selectStrategies)
+  const strategyData = useSelector(selectStrategy)
   const [isCancelOpen, setIsCancelOpen] = useState(false)
   const [dragActive, setDragActive] = useState(false);
   const [file, setFile] = useState(null)
@@ -22,16 +26,54 @@ const StrategyOverView = () => {
     setIsCancelOpen(!isCancelOpen)
   }
 
+  const handleOk = () => {
+    navigate(-1)
+  }
+
   const onSubmit = (formData) => {
-    console.log({...formData, icon: file});
-    dispatch(createStrategyData({...formData, icon: "file"}))
+    if(!params.id) {
+      dispatch(createStrategyData({...formData, icon: "file"}))
+    } else {
+      dispatch(
+        editStrategyData({
+          ...formData,
+          icon: file,
+          exisedSequence: strategyData.sequence,
+          id: params.id,
+        })
+      );
+    }
     Swal.fire({
-        icon: 'success',
-        title: 'Done',
-        text: 'Strategy created successfully',
-      })
+      icon: "success",
+      title: "Done",
+      text: "Strategy created successfully",
+    });
     reset()
   }
+
+  // const onSubmit = (formData) => {
+  //   const formDataToSend = new FormData();
+
+  //   formDataToSend.append("icon", file);
+  //   for (const key in formData) {
+  //     formDataToSend.append(key, formData[key]);
+  //   }
+  //   if (!params.id) {
+  //     dispatch(createStrategyData(formDataToSend));
+  //   } else {
+  //     formDataToSend.append("exisedSequence", strategyData.sequence);
+  //     formDataToSend.append("id", params.id);
+
+  //     dispatch(editStrategyData(formDataToSend));
+  //   }
+
+  //   Swal.fire({
+  //     icon: "success",
+  //     title: "Done",
+  //     text: "Strategy created successfully",
+  //   });
+  //   reset();
+  // };
 
   const handleDrag = function (e) {
     e.preventDefault();
@@ -66,12 +108,30 @@ const StrategyOverView = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isDirty },
     reset,
-  } = useForm();
+  } = useForm({
+    defaultValues: params.id
+      ? {
+          strategy_name: strategyData?.strategy_name,
+          icon: strategyData?.icon,
+          status: strategyData?.status,
+          open_closed: strategyData?.open_closed,
+          sequence: strategyData?.sequence,
+          video: strategyData?.video,
+          primary_color: strategyData?.primary_color,
+          secondary_color: strategyData?.secondary_color,
+          strategy_type: strategyData?.strategy_type,
+          short_desc_web: strategyData?.short_desc_web,
+          short_desc_mobile: strategyData?.short_desc_mobile,
+          desc_web_mob: strategyData?.desc_web_mob,
+          long_desc: strategyData?.long_desc,
+        }
+      : {},
+  });
 
-  
   useEffect(() => {
+    dispatch(getStrategyData(params.id))
     dispatch(getStrategyTypesData())
     dispatch(getStrategiesData())
   }, [])
@@ -102,7 +162,7 @@ const StrategyOverView = () => {
                   className={dragActive ? "drag-active" : ""}
                 >
                   <div>
-                    <button className="upload-button" onClick={onButtonClick}>
+                    <button className="upload-button" type='button' onClick={onButtonClick}>
                       <BsFillPlusCircleFill />
                     </button>
                     <p className="upload-text">
@@ -120,7 +180,7 @@ const StrategyOverView = () => {
               >
                 cancel
               </button>
-              <button className="purple-button" type="submit">
+              <button className="purple-button" type="submit" disabled={!isDirty}>
                 save
               </button>
             </div>
@@ -137,7 +197,8 @@ const StrategyOverView = () => {
                   borderRadius: 0,
                   backgroundColor: "#F5F5F5FF",
                 }}
-                {...register("strategy_name", { required: true })}
+                {...register("strategy_name", { required: true, pattern: /^[A-Za-z]+$/  })}
+                error={errors?.strategy_name ? true : false}
               />
               <select
                 className="select-input"
@@ -145,7 +206,7 @@ const StrategyOverView = () => {
                 {...register("strategy_type", { required: true })}
               >
                 <option value="hidden" disabled>Strategy Type</option>
-                {strategyTypesData.map((elm) => {
+                {strategyTypesData?.map((elm) => {
                   const { id, name } = elm;
                   return (
                     <option key={id} value={id}>
@@ -158,6 +219,7 @@ const StrategyOverView = () => {
                 minRows={4}
                 placeholder="Short Description Web*"
                 {...register("short_desc_web", { required: true })}
+                error={errors?.short_desc_web ? true : false}
                 variant="soft"
                 sx={{
                   m: "0 0 20px 0",
@@ -186,6 +248,7 @@ const StrategyOverView = () => {
                 minRows={4}
                 placeholder="Short Description Mobile*"
                 {...register("short_desc_mobile", { required: true })}
+                error={errors?.short_desc_mobile ? true : false}
                 variant="soft"
                 sx={{
                   m: "0 0 20px 0",
@@ -222,7 +285,7 @@ const StrategyOverView = () => {
                   Sequence*
                 </option>
                 {
-                    strategiesData.map((e, i) => {
+                    strategiesData?.map((e, i) => {
                         return <option key={e.id}>{i + 1}</option>
                     })
                 }
@@ -232,6 +295,7 @@ const StrategyOverView = () => {
               <TextField
                 label="Description of Strategy for Mobile & Web*"
                 {...register("desc_web_mob", { required: true })}
+                error={errors?.desc_web_mob ? true : false}
                 sx={{
                   m: "0 0 20px 0",
                   border: "none",
@@ -243,7 +307,9 @@ const StrategyOverView = () => {
               />
               <TextField
                 label="Primary Color(a hex value of the color)*"
-                {...register("primary_color", { required: true })}
+                {...register("primary_color", { required: true, pattern: /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/ })}
+                error={errors?.primary_color ? true : false}
+
                 sx={{
                   m: "0 0 20px 0",
                   border: "none",
@@ -255,7 +321,8 @@ const StrategyOverView = () => {
               />
               <TextField
                 label="Secondary Color(a hex value of the color)*"
-                {...register("secondary_color", { required: true })}
+                {...register("secondary_color", { required: true, pattern: /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/ })}
+                error={errors?.secondary_color ? true : false}
                 sx={{
                   m: "0 0 20px 0",
                   border: "none",
@@ -279,6 +346,8 @@ const StrategyOverView = () => {
               <TextField
                 label="Video Link"
                 {...register("video", { required: true })}
+                error={errors?.video ? true : false}
+
                 sx={{
                   m: "0 0 20px 0",
                   border: "none",
@@ -292,6 +361,7 @@ const StrategyOverView = () => {
                 minRows={4}
                 placeholder="Long Description*"
                 {...register("long_desc", { required: true })}
+                error={errors?.long_desc ? true : false}
                 variant="soft"
                 sx={{
                   m: "0 0 20px 0",
@@ -320,7 +390,7 @@ const StrategyOverView = () => {
           </div>
         </form>
       </div>
-      {isCancelOpen && <SaveChanges toggleSaveModal={toggleSaveModal} />}
+      {isCancelOpen && <SaveChanges toggleSaveModal={toggleSaveModal} handleOk={handleOk}/>}
     </div>
   );
 }
