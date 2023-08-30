@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {useNavigate} from 'react-router-dom'
-import {useDispatch} from "react-redux"
 import {AiOutlineDrag} from "react-icons/ai"
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
@@ -8,11 +7,9 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { DataGrid } from "@mui/x-data-grid";
 import { v4 as uuidv4 } from "uuid";
-import { getStrategyData } from "../../../features/strategy/strategySlice";
 
 const StrategyTable = ({strategiesData}) => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
   const [anchorEl, setAnchorEl] = useState(null);
   const [strategyId, setStrategyId] = useState(null)
   const open = Boolean(anchorEl);
@@ -24,7 +21,8 @@ const StrategyTable = ({strategiesData}) => {
 
   const viewStrategy =  () => {
     setAnchorEl(null);
-    navigate(`addEditStrategy/${strategyId}`)
+    const strategy = strategiesData.find(elm => elm.id === strategyId)
+    navigate(`addEditStrategy/${strategyId}`, {state: strategy})
   };
 
   const handleClose = () => {
@@ -108,8 +106,7 @@ const StrategyTable = ({strategiesData}) => {
             }}
           >
             <MenuItem onClick={viewStrategy}>edit</MenuItem>
-            {/* <MenuItem onClick={viewStrategy}>MenuItem2</MenuItem>
-            <MenuItem onClick={viewStrategy}>MenuItem3</MenuItem> */}
+            <MenuItem>delete</MenuItem>
           </Menu>
         </>
       ),

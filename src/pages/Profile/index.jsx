@@ -20,8 +20,6 @@ const Profile = () => {
   useEffect(() => {
     dispatch(getUserData(params.id))
   }, [])
-  
-  const {firstName, lastName, email, phone, dob, address} = userData
   return (
     <div className="profile">
       <div className="profile-container">

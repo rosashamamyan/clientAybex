@@ -1,0 +1,136 @@
+.doc {
+    min-height: calc(100vh - 60px);
+    background-color: #E5E5E5FF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.doc-container {
+    width: 80vw;
+    min-height: 80vh;
+}
+
+.doc-container .outlet {
+    padding: 20px;
+}
+
+.doc-header {
+   display: flex;
+   justify-content: start;
+   align-items: center;
+}
+
+.doc-header small {
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.doc-tabs {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.doc-tabs .tabs {
+    width: 100%;
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.doc-tabs .tabs a{
+    text-align: center;
+    text-decoration: none;
+    padding: 20px 70px;
+    border: none;
+    border-bottom: 2px solid black;
+    background-color: transparent;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.doc-tabs .editButton {
+    padding: 10px 12px;
+    border: 2px solid black;
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.doc-tabs .editButton svg {
+    font-size: 20px;
+} 
+
+.tabs a.active{
+   border-bottom: 5px solid #D2BFFFFF !important;
+}
+
+.documentUpload-item {
+    width: 100%;
+    margin-top: 40px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.documentUpload-item .header {
+    height: auto;
+    background-color: #000;
+    color: #fff;
+    padding: 20px 30px;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.documentUpload-item .header small {
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.documentUpload-item .content {
+   padding: 30px 10px 10px 40px;
+}
+
+.doc-input {
+   padding: 30px 0;
+}
+
+.form-doc-upload {
+    width: 220px;
+    height: 180px;
+    margin-top: 20px;
+    max-width: 100%;
+    text-align: center;
+    position: relative;
+}
+  
+#doc-file-upload {
+    display: none;
+}
+  
+#label-doc-upload {
+    height: 100%;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 2px;
+    border-radius: 1rem;
+    border-style: dashed;
+    border-color: #A9A8A7FF;
+    background-color: #fff;
+    color: #A9A8A7FF;
+}
+
+.content .button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+#label-doc-upload.drag-active {
+    background-color: rgb(227, 227, 227);
+}

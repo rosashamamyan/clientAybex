@@ -24,6 +24,10 @@ import InvestorEntities from "../pages/Profile/InvestorEntities";
 import Documents from "../pages/Profile/Documents";
 import AddEditStrategy from "../pages/AddEditStrategy";
 import StrategyOverView from "../pages/AddEditStrategy/StrategyOverview";
+import Universal from "../pages/DocumentUpload/Universal";
+import StrategySpecific from "../pages/DocumentUpload/StrategySpecific";
+import SubFundSpecific from "../pages/DocumentUpload/SubFundSpecific";
+import AccountSpecific from "../pages/DocumentUpload/AccountSpecific";
 function Router() {
   let element = useRoutes([
     {
@@ -65,6 +69,28 @@ function Router() {
          {
             path: "documentUpload",
             element: <DocumentUpload />,
+            children: [
+               {
+                  path: "",
+                  element: <Universal />
+               },
+               {
+                  path: "universal",
+                  element: <Universal />
+               },
+               {
+                  path: "strategySpecific",
+                  element: <StrategySpecific />
+               },
+               {
+                  path: "subFundSpecific",
+                  element: <SubFundSpecific />
+               },
+               {
+                  path: "accountSpecific",
+                  element: <AccountSpecific />
+               },
+            ]
          },
          {
             path: "documentManagment",

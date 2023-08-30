@@ -1,0 +1,39 @@
+.balance-upload {
+    min-height: calc(100vh - 60px);
+    background-color: #E5E5E5FF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bu-container {
+    width: 80vw;
+    min-height: 80vh;
+}
+
+.bu-header {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.bu-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.file-uploading {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.file-uploading > div{
+    width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.file-uploading .upload-file {
+    display: flex;
+
+}

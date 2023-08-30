@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {BsFillPlusCircleFill} from "react-icons/bs"
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStrategyData, editStrategyData, getStrategiesData, getStrategyData, getStrategyTypesData, selectStrategies, selectStrategy, selectStrategyTypes } from '../../../features/strategy/strategySlice';
 import { useForm } from "react-hook-form";
@@ -13,14 +13,16 @@ import './style.css'
 const StrategyOverView = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const location = useLocation();
   const params = useParams()
   const strategyTypesData = useSelector(selectStrategyTypes)
   const strategiesData = useSelector(selectStrategies)
-  const strategyData = useSelector(selectStrategy)
   const [isCancelOpen, setIsCancelOpen] = useState(false)
   const [dragActive, setDragActive] = useState(false);
   const [file, setFile] = useState(null)
   const inputRef = useRef(null);
+
+  const {state} = location
 
   const toggleSaveModal = () => {
     setIsCancelOpen(!isCancelOpen)
@@ -37,8 +39,8 @@ const StrategyOverView = () => {
       dispatch(
         editStrategyData({
           ...formData,
-          icon: file,
-          exisedSequence: strategyData.sequence,
+          icon: "file",
+          exisedSequence: state.sequence,
           id: params.id,
         })
       );
@@ -113,25 +115,24 @@ const StrategyOverView = () => {
   } = useForm({
     defaultValues: params.id
       ? {
-          strategy_name: strategyData?.strategy_name,
-          icon: strategyData?.icon,
-          status: strategyData?.status,
-          open_closed: strategyData?.open_closed,
-          sequence: strategyData?.sequence,
-          video: strategyData?.video,
-          primary_color: strategyData?.primary_color,
-          secondary_color: strategyData?.secondary_color,
-          strategy_type: strategyData?.strategy_type,
-          short_desc_web: strategyData?.short_desc_web,
-          short_desc_mobile: strategyData?.short_desc_mobile,
-          desc_web_mob: strategyData?.desc_web_mob,
-          long_desc: strategyData?.long_desc,
+          strategy_name: state?.strategy_name,
+          icon: state?.icon,
+          status: state?.status,
+          open_closed: state?.open_closed,
+          sequence: state?.sequence,
+          video: state?.video,
+          primary_color: state?.primary_color,
+          secondary_color: state?.secondary_color,
+          strategy_type: state?.strategy_type,
+          short_desc_web: state?.short_desc_web,
+          short_desc_mobile: state?.short_desc_mobile,
+          desc_web_mob: state?.desc_web_mob,
+          long_desc: state?.long_desc,
         }
       : {},
   });
 
   useEffect(() => {
-    dispatch(getStrategyData(params.id))
     dispatch(getStrategyTypesData())
     dispatch(getStrategiesData())
   }, [])
@@ -197,7 +198,7 @@ const StrategyOverView = () => {
                   borderRadius: 0,
                   backgroundColor: "#F5F5F5FF",
                 }}
-                {...register("strategy_name", { required: true, pattern: /^[A-Za-z]+$/  })}
+                {...register("strategy_name", { required: true })}
                 error={errors?.strategy_name ? true : false}
               />
               <select
@@ -277,8 +278,8 @@ const StrategyOverView = () => {
                 <option value="hidden" disabled>
                   Open/Closed*
                 </option>
-                <option value={true}>open</option>
-                <option value={false}>closed</option>
+                <option value={1}>open</option>
+                <option value={0}>closed</option>
               </select>
               <select className="select-input" defaultValue="hidden" {...register("sequence", { required: true })}>
                 <option value="hidden" disabled>
