@@ -27,10 +27,18 @@
     padding: 10px;
     margin: 10px;
 }
+
 .navItem >svg{
     margin-right: 16px;
     font-size: 25px;
 }
+
 .navItem >a {
     text-decoration: none;
+}
+
+.logout-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

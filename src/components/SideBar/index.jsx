@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux"
+import { userLogout } from "../../features/auth/authSlice";
 import { FiUserPlus } from "react-icons/fi";
 import { FaRegUserCircle, FaUpload } from "react-icons/fa";
 import { GoBell } from "react-icons/go";
@@ -14,10 +17,18 @@ import { LuCalendarDays } from "react-icons/lu";
 import { AiOutlineStar } from "react-icons/ai";
 import { VscGraph } from "react-icons/vsc";
 import { PiUsersThree } from "react-icons/pi";
-import { NavLink } from "react-router-dom";
 import "./style.css";
 
 const SideBar = ({ isOpen, handleOpen }) => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const logout = async () => {
+    dispatch(userLogout())
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
   return (
     <nav className={isOpen ? "navOpen" : "navClose"}>
       <div>
@@ -110,6 +121,9 @@ const SideBar = ({ isOpen, handleOpen }) => {
           <NavLink to={"userManagment"} onClick={handleOpen}>
             User Managment
           </NavLink>
+        </div>
+        <div className="logout-button">
+          <button onClick={logout} className="purple-button">logout</button>
         </div>
       </div>
     </nav>

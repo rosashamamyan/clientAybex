@@ -12,3 +12,7 @@ export const signUp = async (data) => {
 export const refresh = async () => {
   return await axios.post(`${API_URL}/api/auth/refresh`);
 };
+
+export const logout = async () => {
+  return await $api.post(`/api/auth/logout`)
+}

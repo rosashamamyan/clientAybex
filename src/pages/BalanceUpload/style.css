@@ -1,5 +1,6 @@
 .balance-upload {
     min-height: calc(100vh - 60px);
+    padding: 40px 0;
     background-color: #E5E5E5FF;
     display: flex;
     justify-content: center;
@@ -19,7 +20,7 @@
 
 .bu-content {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 40% 60%;
 }
 
 .file-uploading {
@@ -29,11 +30,127 @@
 
 .file-uploading > div{
     width: 100%;
+    padding: 20px;
+    margin-bottom: 20px;
     background-color: #fff;
     border-radius: 10px;
 }
 
 .file-uploading .upload-file {
     display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.upload-form {
+    width: 90%;
+    font-weight: 600;
+}
+
+.upload-form > div {
+    display: flex;
+    align-items: start;
+    margin-bottom: 30px;
+}
+
+.upload-form .select-strategy {
+    display: flex;
+    align-items: center;
+}
+
+.select-strategy select {
+    width: 100%;
+    height: 56px;
+    padding: 16.5px 14px;
+    background-color: #D2BFFFFF;
+    border: none;
+    border-bottom: 1px solid #BCBCBAFF;
+    border-radius: 4px 4px 0 0;
+    outline: none;
+}
+
+.upload-template {
+    display: flex;
+    align-items: center;
+}
+
+.upload-template .upload {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.upload-template .upload-input label{
+    background-color: #D2BFFFFF;
+    padding: 8px 10px;
+    margin-left: 20px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+.data-file {
+    display: flex;
+}
+
+.data-file .up-datafile {
+    display: flex;
+    align-items: flex-end;
+    margin-top: 10px;
+}
+
+.data-file .up-datafile input {
+    padding: 20px 10px;
+    margin-right: 20px;
+    background-color: #F5F5F5FF;
+    border: none;
+    border-bottom: 1px solid gray;
+    outline: none;
+}
+
+.data-file .up-datafile button {
+    padding: 10px 20px;
+    background-color: #D2BFFFFF;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    transition: .5s;
+}
+
+.data-file .up-datafile label {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.upload-form .submit {
+    display: flex;
+    align-items: center;
+}
+
+.submit .submit-upload {
+    display: flex;
+    align-items: center;
+}
+
+.submit .submit-upload button {
+    text-transform: capitalize;
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-left: 20px;
+}
+
+.circle-num {
+    width: 40px;
+    height: 40px;
+    background-color: #F5F5F5FF;
+    border: 2px solid black;
+    border-radius: 50%;
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
