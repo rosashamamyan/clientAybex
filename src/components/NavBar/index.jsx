@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import "./style.css";
 import { TfiClose, TfiMenu } from "react-icons/tfi";
 import NavBarLogo from "../../assets/images/NavBarLogo";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import "./style.css";
 
 const NavBar = ({ isOpen, handleOpen }) => {
   const [formattedPageName, setFormattedPageName] = useState('')
@@ -17,14 +17,16 @@ const NavBar = ({ isOpen, handleOpen }) => {
         .replace(/^./, (str) => str.toUpperCase());
   
       setFormattedPageName(formattedName);
+    } else {
+      setFormattedPageName("");
     }
-  }, [location.pathname]);
+  }, [pageName]);
 
   return (
     <div className="navBar-container">
       <div className="navBar">
         <div className="navbar-logo">
-          <NavBarLogo />
+          <Link to={"/dashboard"}><NavBarLogo /></Link>
         </div>
         <div className="menu-button">
           {isOpen ? (
@@ -33,7 +35,7 @@ const NavBar = ({ isOpen, handleOpen }) => {
             <TfiMenu className="burger_button" onClick={handleOpen} />
           )}
         </div>
-        <div className="navbar-pageName">{formattedPageName && formattedPageName}</div>
+        <div className="navbar-pageName">{formattedPageName ? formattedPageName : null}</div>
       </div>
     </div>
   );

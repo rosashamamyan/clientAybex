@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {useNavigate} from 'react-router-dom'
+import { useDispatch } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
 import { v4 as uuidv4 } from "uuid";
 import IconButton from '@mui/material/IconButton';
@@ -7,8 +8,10 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import "./style.css";
+import { reactivateUserAccount } from "../../features/users/userSlice";
 
 const DataTable = ({ usersData }) => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = useState(null);
   const [userId, setUserId] = useState(null)
@@ -24,14 +27,23 @@ const DataTable = ({ usersData }) => {
     navigate(`viewProfile/${id}/contactInfo`);
   };
 
+  const reactivateAccount = (status) => {
+    dispatch(
+      reactivateUserAccount({
+        userId,
+        status,
+      })
+    );
+  }
+
   const handleClose = () => {
     setAnchorEl(null);
   }
   
   
   const options = [
-    {id: 1, title: 'View Profile', action: viewProfile},
-    {id: 2, title: 'Reactivate account'},
+    {id: 1, title: 'View Profile', action: () => {viewProfile(userId)}},
+    {id: 2, title: 'Reactivate account', action: () => {viewProfile(userId)}},
     {id: 3, title: 'Clear Notifications'}
   ];
   const columns = [
@@ -84,7 +96,7 @@ const DataTable = ({ usersData }) => {
             }}
           >
             {options.map((option) => (
-              <MenuItem key={option.id} onClick={() => option.action(userId)}>
+              <MenuItem key={option.id} onClick={option.action}>
                 {option.title}
               </MenuItem>
             ))}

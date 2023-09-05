@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {useNavigate} from 'react-router-dom'
+import {useDispatch} from "react-redux"
 import {AiOutlineDrag} from "react-icons/ai"
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
@@ -7,9 +8,11 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { DataGrid } from "@mui/x-data-grid";
 import { v4 as uuidv4 } from "uuid";
+import { deleteStrategyData } from "../../../features/strategy/strategySlice";
 
 const StrategyTable = ({strategiesData}) => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [anchorEl, setAnchorEl] = useState(null);
   const [strategyId, setStrategyId] = useState(null)
   const open = Boolean(anchorEl);
@@ -24,6 +27,11 @@ const StrategyTable = ({strategiesData}) => {
     const strategy = strategiesData.find(elm => elm.id === strategyId)
     navigate(`addEditStrategy/${strategyId}`, {state: strategy})
   };
+
+  const deleteStrategy = () => {
+    setAnchorEl(null);
+    dispatch(deleteStrategyData(strategyId))
+  }
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -106,7 +114,7 @@ const StrategyTable = ({strategiesData}) => {
             }}
           >
             <MenuItem onClick={viewStrategy}>edit</MenuItem>
-            <MenuItem>delete</MenuItem>
+            <MenuItem onClick={deleteStrategy}>delete</MenuItem>
           </Menu>
         </>
       ),

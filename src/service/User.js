@@ -15,3 +15,7 @@ export const getUser = async (userId) => {
 export const updateUser = async (data) => {
   return await $api.post(`/api/user/updateUser`, {...data})
 }
+
+export const reactivateAcc = async (data) => {
+  return await $api.post(`/api/user/reactivateAcc`, data)
+}

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createUser, getAllUsers, getUser, updateUser } from "../../service/User";
+import { createUser, getAllUsers, getUser, reactivateAcc, updateUser } from "../../service/User";
 
 const initialState = {
   users: [],
@@ -24,6 +24,11 @@ export const getUserData = createAsyncThunk("users/getUser", async (userId) => {
 export const updateUserData = createAsyncThunk("users/updateUser", async (formData) => {
   const updatedUser = await updateUser(formData)
   return updatedUser
+})
+
+export const reactivateUserAccount = createAsyncThunk("users/reactivateAcc", async (data) => {
+  const reactivatedUser = await reactivateAcc(data)
+  return reactivatedUser
 })
 
 const userSlice = createSlice({ 

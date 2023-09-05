@@ -1,7 +1,7 @@
 .strategy {
     min-height: calc(100vh - 60px);
     background-color: #E5E5E5FF;
-    padding: 50px;
+    padding: 80px 50px;
     display: flex;
     justify-content: center;
     align-items: center;

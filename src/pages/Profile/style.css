@@ -1,6 +1,6 @@
 .profile {
     width: 100vw;
-    min-height: calc(100vh - 60px);
+    min-height: 100vh;
     background-color: #E5E5E5FF;
     padding: 50px;
     display: flex;

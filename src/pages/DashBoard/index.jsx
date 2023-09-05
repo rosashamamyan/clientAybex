@@ -1,4 +1,3 @@
-import $api, { API_URL } from "../../http";
 import { useNavigate } from "react-router-dom";
 import DashboardBlock1 from "../../components/Modals/DashBoard/DashboardBlock1";
 import DashBoardBlock2 from "../../components/Modals/DashBoard/DashBoardBlock2";

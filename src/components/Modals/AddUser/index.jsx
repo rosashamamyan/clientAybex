@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { TextField } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs from 'dayjs'
+import dayjs, { Dayjs } from "dayjs";
 import SaveChanges from "../SaveChanges";
 import { useDispatch } from "react-redux";
 import { addUser, fetchUsers } from "../../../features/users/userSlice";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import "./style.css";
 
 const AddUser = ({ toggleForm }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [isShow, setIsShow] = useState(true);
-  const [isSaveOpen, setIsSaveOpen] = useState(false)
+  const [isSaveOpen, setIsSaveOpen] = useState(false);
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -24,9 +24,9 @@ const AddUser = ({ toggleForm }) => {
     phone: "",
     city: "",
     postal_code: "",
-    dob: "",
+    dob: null,
     account_number: "",
-    status: ""
+    status: "",
   });
   const {
     firstName,
@@ -40,27 +40,26 @@ const AddUser = ({ toggleForm }) => {
     postal_code,
     dob,
     account_number,
-    status
+    status,
   } = form;
-
   const handleShow = () => {
     setIsShow(!isShow);
   };
 
   const toggleSaveModal = () => {
-     setIsSaveOpen(!isSaveOpen)
-  }
+    setIsSaveOpen(!isSaveOpen);
+  };
 
-  const handleOk = async() => {
-    toggleSaveModal()
-    toggleForm()
-  } 
+  const handleOk = async () => {
+    toggleSaveModal();
+    toggleForm();
+  };
 
   const handleSubmit = () => {
-    dispatch(addUser(form))
+    dispatch(addUser(form));
     dispatch(fetchUsers());
-    toggleForm()
-  }
+    toggleForm();
+  };
 
   return (
     <div className="addUser">
@@ -159,20 +158,12 @@ const AddUser = ({ toggleForm }) => {
                         setForm({ ...form, postal_code: e.target.value })
                       }
                     />
-                    {/* <input
-                      type="date"
-                      className="dateInput"
-                      value={dob}
-                      onChange={(e) => {
-                        setForm({ ...form, dob: e.target.value });
-                      }}
-                    /> */}
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
-                        inputFormat="DD.MM.YYYY"
                         label="DOB"
-                        value={dob ? dayjs(dob, 'YYYY-MM-DD').toDate() : ""}
-                        onChange={(newValue) => setForm({ ...form, dob: newValue ? dayjs(newValue).format('YYYY-MM-DD') : "" })}
+                        inputFormat="YYYY-MM-DD"
+                        value={dob}
+                        onChange={(newValue) => setForm({ ...form, dob: newValue })}
                       />
                     </LocalizationProvider>
                   </div>

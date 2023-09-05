@@ -32,50 +32,54 @@ const StrategyOverView = () => {
     navigate(-1)
   }
 
-  const onSubmit = (formData) => {
-    if(!params.id) {
-      dispatch(createStrategyData({...formData, icon: "file"}))
-    } else {
-      dispatch(
-        editStrategyData({
-          ...formData,
-          icon: "file",
-          exisedSequence: state.sequence,
-          id: params.id,
-        })
-      );
-    }
-    Swal.fire({
-      icon: "success",
-      title: "Done",
-      text: "Strategy created successfully",
-    });
-    reset()
-  }
-
   // const onSubmit = (formData) => {
-  //   const formDataToSend = new FormData();
-
-  //   formDataToSend.append("icon", file);
-  //   for (const key in formData) {
-  //     formDataToSend.append(key, formData[key]);
-  //   }
-  //   if (!params.id) {
-  //     dispatch(createStrategyData(formDataToSend));
+  //   if(!params.id) {
+  //     dispatch(createStrategyData({...formData, icon: "file"}))
   //   } else {
-  //     formDataToSend.append("exisedSequence", strategyData.sequence);
-  //     formDataToSend.append("id", params.id);
-
-  //     dispatch(editStrategyData(formDataToSend));
+  //     dispatch(
+  //       editStrategyData({
+  //         ...formData,
+  //         icon: "file",
+  //         exisedSequence: state.sequence,
+  //         id: params.id,
+  //       })
+  //     );
   //   }
-
   //   Swal.fire({
   //     icon: "success",
   //     title: "Done",
   //     text: "Strategy created successfully",
   //   });
-  //   reset();
-  // };
+  //   reset()
+  // }
+
+  const onSubmit = (formData) => {
+    const formDataToSend = new FormData();
+    
+    formDataToSend.append('file', new Blob([JSON.stringify(file)], { type: 'application/json'}));
+    formDataToSend.append('icon-Nmae', file.name);
+
+      
+    console.log('formDataToSend',formDataToSend.entries())
+    if (!params.id) {
+      dispatch(createStrategyData({
+        formDataToSend,
+        formData
+      }));
+    } else {
+      formDataToSend.append("exisedSequence", state.sequence);
+      formDataToSend.append("id", params.id);
+
+      dispatch(editStrategyData(...formDataToSend));
+    }
+
+    Swal.fire({
+      icon: "success",
+      title: "Done",
+      text: "Strategy created successfully",
+    });
+    reset();
+  };
 
   const handleDrag = function (e) {
     e.preventDefault();
@@ -287,7 +291,7 @@ const StrategyOverView = () => {
                 </option>
                 {
                     strategiesData?.map((e, i) => {
-                        return <option key={e.id}>{i + 1}</option>
+                        return <option key={i}>{i + 1}</option>
                     })
                 }
               </select>

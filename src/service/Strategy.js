@@ -12,10 +12,16 @@ export const getStrategyTypes = async () => {
     return await $api.get(`/api/strategy/getStrategyTypes`)
 }
 
-export const createStrategy = async (formData) => {
-    return await $api.post(`/api/strategy/createStrategy`, {...formData})
+export const createStrategy = async (formDataToSend, formData) => {
+    return await $api.post(`/api/strategy/createStrategy`, {data:{
+        formDataToSend, formData
+    }})
 }
 
 export const editStrategy = async (formData) => {
     return await $api.post(`/api/strategy/editStrategy`, {...formData})
+}
+
+export const deleteStrategy = async (strategyId) => {
+    return await $api.post(`/api/strategy/deleteStrategy`, {strategyId})
 }
