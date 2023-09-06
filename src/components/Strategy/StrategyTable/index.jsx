@@ -9,6 +9,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { DataGrid } from "@mui/x-data-grid";
 import { v4 as uuidv4 } from "uuid";
 import { deleteStrategyData } from "../../../features/strategy/strategySlice";
+import { API_URL } from "../../../http";
 
 const StrategyTable = ({strategiesData}) => {
   const navigate = useNavigate()
@@ -25,6 +26,7 @@ const StrategyTable = ({strategiesData}) => {
   const viewStrategy =  () => {
     setAnchorEl(null);
     const strategy = strategiesData.find(elm => elm.id === strategyId)
+    console.log(strategy);
     navigate(`addEditStrategy/${strategyId}`, {state: strategy})
   };
 
@@ -48,7 +50,7 @@ const StrategyTable = ({strategiesData}) => {
       field: "icon",
       headerName: "Icon",
       width: 200,
-      renderCell: (params) => <img style={{width: "50px"}} alt="strategy icon" src={params.row?.icon}/>,
+      renderCell: (params) => <img style={{width: "50px"}} alt="strategy icon" src={`${API_URL}/assets/${params.row?.icon}`}/>,
     },
     {
       field: "strategy_name",

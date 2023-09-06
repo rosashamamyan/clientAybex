@@ -1,6 +1,6 @@
 .balance-upload {
-    min-height: calc(100vh - 60px);
-    padding: 40px 0;
+    min-height: 100vh;
+    padding: 100px 0;
     background-color: #E5E5E5FF;
     display: flex;
     justify-content: center;

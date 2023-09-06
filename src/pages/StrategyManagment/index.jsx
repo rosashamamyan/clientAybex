@@ -2,15 +2,13 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { getStrategiesData, getStrategyTypesData, selectStrategies, selectStrategyTypes } from '../../features/strategy/strategySlice'
 import StrategyTable from '../../components/Strategy/StrategyTable';
-import './style.css'
 import StrategyTypesDropDown from '../../components/Strategy/StrategyTypesMenu';
-import { useNavigate } from 'react-router-dom';
+import './style.css'
 
 const StrategyManagment = () => {
   const strategiesData = useSelector(selectStrategies)
   const strategyTypesData = useSelector(selectStrategyTypes)
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   useEffect(() => {
      dispatch(getStrategiesData())

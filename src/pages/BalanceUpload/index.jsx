@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux"
 import * as XLSX from "xlsx";
 import {BiSolidDownload} from 'react-icons/bi'
 import { getStrategiesData, selectStrategies } from '../../features/strategy/strategySlice'
+import { createAccountData } from '../../features/account/accountSlice';
 import Swal from 'sweetalert2'
 import './style.css'
 
@@ -12,7 +13,7 @@ const BalanceUpload = () => {
   const allowedExtensions = ["csv", "xlsx", "xls"];
   const [fileName, setFileName] = useState("")
   const [formData, setFormData] = useState({
-    strategy_name: "",
+    strategy_id: "",
     fileName: "",
     date: new Date(),
     fileData: []
@@ -39,12 +40,14 @@ const BalanceUpload = () => {
       });
     };
   }
+
+  const handleSubmit = (formData) => {
+    dispatch(createAccountData(formData))
+  }
   
   useEffect(() => {
      dispatch(getStrategiesData())
   }, [])
-
-  console.log(formData);
 
   return (
     <div className="balance-upload">
@@ -55,7 +58,7 @@ const BalanceUpload = () => {
         <div className="bu-content">
           <div className="file-uploading">
             <div className="upload-file">
-              <form className="upload-form">
+              <form className="upload-form" onSubmit={() => handleSubmit(formData)}>
                 <div className="select-strategy">
                   <div className="circle-num">1</div>
                   <select
@@ -63,7 +66,7 @@ const BalanceUpload = () => {
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        strategy_name: e.target.value,
+                        strategy_id: e.target.value,
                       })
                     }
                   >
@@ -73,7 +76,7 @@ const BalanceUpload = () => {
                     {strategiesData.map((elm) => {
                       const { id, strategy_name } = elm;
                       return (
-                        <option value={strategy_name} key={id}>
+                        <option value={id} key={id}>
                           {strategy_name}
                         </option>
                       );
@@ -134,7 +137,7 @@ const BalanceUpload = () => {
                   <div className="circle-num">5</div>
                   <div className="submit-upload">
                     <div>Upload File</div>
-                    <button type="button" className="purple-button">
+                    <button type="submit" className="purple-button">
                       upload
                     </button>
                   </div>

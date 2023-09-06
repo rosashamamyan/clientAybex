@@ -40,16 +40,16 @@ export const getStrategyTypesData = createAsyncThunk(
 
 export const createStrategyData = createAsyncThunk(
   "strategy/createStrategy",
-  async (formDataToSend, formData) => {
-    const createdStrategy = await createStrategy(formDataToSend, formData);
+  async (data) => {
+    const createdStrategy = await createStrategy(data);
     return createdStrategy;
   }
 );
 
 export const editStrategyData = createAsyncThunk(
   "strategy/editStrategy",
-  async (formData) => {
-    const editedStrategy = await editStrategy(formData);
+  async (data) => {
+    const editedStrategy = await editStrategy(data);
     return editedStrategy;
   }
 );

@@ -9,6 +9,7 @@ import Textarea from '@mui/joy/Textarea';
 import SaveChanges from '../../../components/Modals/SaveChanges';
 import Swal from 'sweetalert2';
 import './style.css'
+import { API_URL } from '../../../http';
 
 const StrategyOverView = () => {
   const dispatch = useDispatch()
@@ -32,46 +33,28 @@ const StrategyOverView = () => {
     navigate(-1)
   }
 
-  // const onSubmit = (formData) => {
-  //   if(!params.id) {
-  //     dispatch(createStrategyData({...formData, icon: "file"}))
-  //   } else {
-  //     dispatch(
-  //       editStrategyData({
-  //         ...formData,
-  //         icon: "file",
-  //         exisedSequence: state.sequence,
-  //         id: params.id,
-  //       })
-  //     );
-  //   }
-  //   Swal.fire({
-  //     icon: "success",
-  //     title: "Done",
-  //     text: "Strategy created successfully",
-  //   });
-  //   reset()
-  // }
-
   const onSubmit = (formData) => {
-    const formDataToSend = new FormData();
-    
-    formDataToSend.append('file', new Blob([JSON.stringify(file)], { type: 'application/json'}));
-    formDataToSend.append('icon-Nmae', file.name);
-
-      
-    console.log('formDataToSend',formDataToSend.entries())
-    if (!params.id) {
-      dispatch(createStrategyData({
-        formDataToSend,
-        formData
-      }));
-    } else {
-      formDataToSend.append("exisedSequence", state.sequence);
-      formDataToSend.append("id", params.id);
-
-      dispatch(editStrategyData(...formDataToSend));
-    }
+      const data = new FormData();
+      data.append('file', file);
+      data.append('strategy_name',formData.strategy_name)
+      data.append('strategy_type',formData.strategy_type)
+      data.append('short_desc_web',formData.short_desc_web)
+      data.append('short_desc_mobile',formData.short_desc_mobile)
+      data.append('open_closed',formData.open_closed)
+      data.append('sequence',formData.sequence)
+      data.append('desc_web_mob',formData.desc_web_mob)
+      data.append('primary_color',formData.primary_color)
+      data.append('secondary_color',formData.secondary_color)
+      data.append('status',formData.status)
+      data.append('video',formData.video)
+      data.append('long_desc',formData.long_desc)
+      if (!params.id) {
+        dispatch(createStrategyData(data));
+      } else {
+        data.append("exisedSequence", state.sequence);
+        data.append("id", params.id);
+        dispatch(editStrategyData(data));
+      }
 
     Swal.fire({
       icon: "success",
@@ -167,11 +150,33 @@ const StrategyOverView = () => {
                   className={dragActive ? "drag-active" : ""}
                 >
                   <div>
-                    <button className="upload-button" type='button' onClick={onButtonClick}>
+                    <button
+                      className="upload-button"
+                      type="button"
+                      onClick={onButtonClick}
+                    >
                       <BsFillPlusCircleFill />
                     </button>
                     <p className="upload-text">
-                      Drag and drop file here or change icon image
+                      {params.id ? (
+                        <>
+                          {file ? (
+                            file.name
+                          ) : (
+                            <img
+                              src={`${API_URL}/assets/${state.icon}`}
+                              alt={state.icon}
+                              style={{ width: "100px" }}
+                            />
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          {file
+                            ? file.name
+                            : "Drag and drop file here or change icon image"}
+                        </>
+                      )}
                     </p>
                   </div>
                 </label>
@@ -185,7 +190,11 @@ const StrategyOverView = () => {
               >
                 cancel
               </button>
-              <button className="purple-button" type="submit" disabled={!isDirty}>
+              <button
+                className="purple-button"
+                type="submit"
+                disabled={!isDirty && !file}
+              >
                 save
               </button>
             </div>
@@ -210,7 +219,9 @@ const StrategyOverView = () => {
                 defaultValue="hidden"
                 {...register("strategy_type", { required: true })}
               >
-                <option value="hidden" disabled>Strategy Type</option>
+                <option value="hidden" disabled>
+                  Strategy Type
+                </option>
                 {strategyTypesData?.map((elm) => {
                   const { id, name } = elm;
                   return (
@@ -278,22 +289,28 @@ const StrategyOverView = () => {
                   },
                 }}
               />
-              <select className="select-input" defaultValue="hidden" {...register("open_closed", { required: true })}>
+              <select
+                className="select-input"
+                defaultValue="hidden"
+                {...register("open_closed", { required: true })}
+              >
                 <option value="hidden" disabled>
                   Open/Closed*
                 </option>
                 <option value={1}>open</option>
                 <option value={0}>closed</option>
               </select>
-              <select className="select-input" defaultValue="hidden" {...register("sequence", { required: true })}>
+              <select
+                className="select-input"
+                defaultValue="hidden"
+                {...register("sequence", { required: true })}
+              >
                 <option value="hidden" disabled>
                   Sequence*
                 </option>
-                {
-                    strategiesData?.map((e, i) => {
-                        return <option key={i}>{i + 1}</option>
-                    })
-                }
+                {strategiesData?.map((e, i) => {
+                  return <option key={i}>{i + 1}</option>;
+                })}
               </select>
             </div>
             <div>
@@ -312,9 +329,11 @@ const StrategyOverView = () => {
               />
               <TextField
                 label="Primary Color(a hex value of the color)*"
-                {...register("primary_color", { required: true, pattern: /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/ })}
+                {...register("primary_color", {
+                  required: true,
+                  pattern: /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
+                })}
                 error={errors?.primary_color ? true : false}
-
                 sx={{
                   m: "0 0 20px 0",
                   border: "none",
@@ -326,7 +345,10 @@ const StrategyOverView = () => {
               />
               <TextField
                 label="Secondary Color(a hex value of the color)*"
-                {...register("secondary_color", { required: true, pattern: /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/ })}
+                {...register("secondary_color", {
+                  required: true,
+                  pattern: /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
+                })}
                 error={errors?.secondary_color ? true : false}
                 sx={{
                   m: "0 0 20px 0",
@@ -352,7 +374,6 @@ const StrategyOverView = () => {
                 label="Video Link"
                 {...register("video", { required: true })}
                 error={errors?.video ? true : false}
-
                 sx={{
                   m: "0 0 20px 0",
                   border: "none",
@@ -395,7 +416,9 @@ const StrategyOverView = () => {
           </div>
         </form>
       </div>
-      {isCancelOpen && <SaveChanges toggleSaveModal={toggleSaveModal} handleOk={handleOk}/>}
+      {isCancelOpen && (
+        <SaveChanges toggleSaveModal={toggleSaveModal} handleOk={handleOk} />
+      )}
     </div>
   );
 }
