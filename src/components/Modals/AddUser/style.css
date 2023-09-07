@@ -76,6 +76,7 @@
 .status-input {
     width: 223px;
     height: 56px;
+    background-color: #D2BFFFFF;
     padding: 16.5px 14px;
     border: 1px solid #BCBCBAFF;
     border-radius: 4px;
@@ -107,6 +108,40 @@
 
 .addAcount__form .form__inputs {
     margin-bottom: 30px;
+}
+
+.form__inputs .inputs > div {
+    margin-bottom: 10px;
+}
+
+.form__inputs .button {
+    min-height: 50px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form__inputs .button > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form__inputs button {
+    border: 1px solid gray;
+    border-radius: 50%;
+    background-color: transparent;
+    padding: 10px 15px;
+    margin-right: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.form__inputs small {
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .cancel-icon svg {

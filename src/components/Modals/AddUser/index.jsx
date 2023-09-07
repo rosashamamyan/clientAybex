@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { TextField } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
-import dayjs, { Dayjs } from "dayjs";
 import SaveChanges from "../SaveChanges";
 import { useDispatch } from "react-redux";
 import { addUser, fetchUsers } from "../../../features/users/userSlice";
@@ -14,6 +13,10 @@ const AddUser = ({ toggleForm }) => {
   const dispatch = useDispatch();
   const [isShow, setIsShow] = useState(true);
   const [isSaveOpen, setIsSaveOpen] = useState(false);
+  const [inputCounter, setInputCounter] = useState(1)
+  const [accountsData, setAccountsData] = useState([])
+  const [status, setStatus] = useState(null)
+  const [number, setNumber] = useState(null)
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -25,8 +28,7 @@ const AddUser = ({ toggleForm }) => {
     city: "",
     postal_code: "",
     dob: null,
-    account_number: "",
-    status: "",
+    accounts: []
   });
   const {
     firstName,
@@ -38,10 +40,9 @@ const AddUser = ({ toggleForm }) => {
     phone,
     city,
     postal_code,
-    dob,
-    account_number,
-    status,
+    dob
   } = form;
+
   const handleShow = () => {
     setIsShow(!isShow);
   };
@@ -56,10 +57,17 @@ const AddUser = ({ toggleForm }) => {
   };
 
   const handleSubmit = () => {
-    dispatch(addUser(form));
+    dispatch(addUser({...form, accounts: [...accountsData, {account_number: number, account_status: status}]}));
     dispatch(fetchUsers());
     toggleForm();
   };
+
+  const handleAddMore = () => {
+    setAccountsData([...accountsData, {account_number: number, account_status: status}])
+    setNumber(null)
+    setStatus(null)
+    setInputCounter(prev => prev + 1)
+  }
 
   return (
     <div className="addUser">
@@ -163,7 +171,9 @@ const AddUser = ({ toggleForm }) => {
                         label="DOB"
                         inputFormat="YYYY-MM-DD"
                         value={dob}
-                        onChange={(newValue) => setForm({ ...form, dob: newValue })}
+                        onChange={(newValue) =>
+                          setForm({ ...form, dob: newValue })
+                        }
                       />
                     </LocalizationProvider>
                   </div>
@@ -177,24 +187,38 @@ const AddUser = ({ toggleForm }) => {
             ) : (
               <div className="addAcount__form">
                 <div className="form__inputs">
-                  <TextField
-                    label="Account Number"
-                    sx={{ m: "0 30px 0 0" }}
-                    value={account_number}
-                    onChange={(e) =>
-                      setForm({ ...form, account_number: e.target.value })
-                    }
-                  />
-                  <select
-                    className="status-input"
-                    value={status}
-                    onChange={(e) =>
-                      setForm({ ...form, status: e.target.value })
-                    }
-                  >
-                    <option value={0}>deactivted</option>
-                    <option value={1}>activated</option>
-                  </select>
+                  <div className="inputs">
+                    {Array.from(Array(inputCounter)).map((elm, index) => {
+                      return (
+                        <div key={index}>
+                          <TextField
+                            label="Account Number"
+                            sx={{ m: "0 30px 0 0" }}
+                            onChange={(e) => setNumber(+e.target.value)}
+                          />
+                          <select
+                            className="status-input"
+                            onChange={(e) => setStatus(+e.target.value)}
+                            defaultValue="hidden"
+                          >
+                            <option value="hidden" disabled>
+                              Account Status
+                            </option>
+                            <option value={0}>deactivted</option>
+                            <option value={1}>activated</option>
+                          </select>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="button">
+                    <div>
+                      <button type="button" onClick={handleAddMore} disabled={!number}>
+                        +
+                      </button>
+                      <small>Add More</small>
+                    </div>
+                  </div>
                 </div>
                 <div className="tabs-buttons">
                   <button className="purple-button" type="submit">

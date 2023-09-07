@@ -15,14 +15,16 @@ const BalanceUpload = () => {
   const [formData, setFormData] = useState({
     strategy_id: "",
     fileName: "",
-    date: new Date(),
-    fileData: []
+    filePath: "",
+    fileUploaded: new Date(),
+    fileData: null
   })
 
   const handleFileUpload = (e) => {
     const reader = new FileReader();
     const file = e.target?.files[0]
     const fName = e.target.files[0].name
+    const fPath = e.target.files[0].path
 
     reader.readAsBinaryString(file);
     setFileName(fName)
@@ -36,6 +38,7 @@ const BalanceUpload = () => {
       setFormData({
         ...formData,
         fileName: fName,
+        filePath: fPath,
         fileData: parsedData
       });
     };
@@ -58,7 +61,10 @@ const BalanceUpload = () => {
         <div className="bu-content">
           <div className="file-uploading">
             <div className="upload-file">
-              <form className="upload-form" onSubmit={() => handleSubmit(formData)}>
+              <form
+                className="upload-form"
+                onSubmit={() => handleSubmit(formData)}
+              >
                 <div className="select-strategy">
                   <div className="circle-num">1</div>
                   <select
@@ -123,7 +129,7 @@ const BalanceUpload = () => {
                             onChange={handleFileUpload}
                             style={{ display: "none" }}
                           />
-                          <button type="button">
+                          <button type="button" disabled={!formData.strategy_id}>
                             <label htmlFor="icon-button-file">
                               Choose File
                             </label>
@@ -137,7 +143,11 @@ const BalanceUpload = () => {
                   <div className="circle-num">5</div>
                   <div className="submit-upload">
                     <div>Upload File</div>
-                    <button type="submit" className="purple-button">
+                    <button
+                      type="submit"
+                      className="purple-button"
+                      disabled={!formData.strategy_id || !formData.fileData}
+                    >
                       upload
                     </button>
                   </div>
