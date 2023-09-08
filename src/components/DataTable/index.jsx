@@ -7,8 +7,8 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import "./style.css";
 import { reactivateUserAccount } from "../../features/users/userSlice";
+import "./style.css";
 
 const DataTable = ({ usersData }) => {
   const dispatch = useDispatch()

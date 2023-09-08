@@ -22,26 +22,32 @@ const BalanceUpload = () => {
 
   const handleFileUpload = (e) => {
     const reader = new FileReader();
-    const file = e.target?.files[0]
-    const fName = e.target.files[0].name
-    const fPath = e.target.files[0].path
+    const file = e.target?.files[0];
+    const fName = e.target.files[0].name;
+    const fPath = e.target.files[0].path;
+  
+    const fileExtension = fName.split('.').pop().toLowerCase();
 
-    reader.readAsBinaryString(file);
-    setFileName(fName)
-
-    reader.onload = (e) => {
-      const data = e.target.result;
-      const workbook = XLSX.read(data, { type: "binary" });
-      const sheetName = workbook.SheetNames[0];
-      const sheet = workbook.Sheets[sheetName];
-      const parsedData = XLSX.utils.sheet_to_json(sheet);
-      setFormData({
-        ...formData,
-        fileName: fName,
-        filePath: fPath,
-        fileData: parsedData
-      });
-    };
+    if (allowedExtensions.includes(fileExtension)) {
+      reader.readAsBinaryString(file);
+      setFileName(fName);
+  
+      reader.onload = (e) => {
+        const data = e.target.result;
+        const workbook = XLSX.read(data, { type: "binary" });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        const parsedData = XLSX.utils.sheet_to_json(sheet);
+        setFormData({
+          ...formData,
+          fileName: fName,
+          filePath: fPath,
+          fileData: parsedData
+        });
+      };
+    } else {
+      alert('Invalid file type. Please upload a CSV, XLSX, or XLS file.');
+    }
   }
 
   const handleSubmit = (formData) => {

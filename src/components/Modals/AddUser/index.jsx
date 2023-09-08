@@ -194,7 +194,7 @@ const AddUser = ({ toggleForm }) => {
                           <TextField
                             label="Account Number"
                             sx={{ m: "0 30px 0 0" }}
-                            onChange={(e) => setNumber(+e.target.value)}
+                            onChange={(e) => setNumber(e.target.value)}
                           />
                           <select
                             className="status-input"
@@ -213,7 +213,7 @@ const AddUser = ({ toggleForm }) => {
                   </div>
                   <div className="button">
                     <div>
-                      <button type="button" onClick={handleAddMore} disabled={!number}>
+                      <button type="button" onClick={handleAddMore} disabled={!number || status === null}>
                         +
                       </button>
                       <small>Add More</small>
