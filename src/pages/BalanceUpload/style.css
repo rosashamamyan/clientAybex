@@ -144,7 +144,7 @@
 }
 
 .circle-num {
-    width: 40px;
+    min-width: 40px;
     height: 40px;
     background-color: #F5F5F5FF;
     border: 2px solid black;
@@ -153,4 +153,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.bu-table {
+    padding-left: 50px;
 }

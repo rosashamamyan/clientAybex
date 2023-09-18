@@ -3,20 +3,20 @@ import {useDispatch, useSelector} from "react-redux"
 import * as XLSX from "xlsx";
 import {BiSolidDownload} from 'react-icons/bi'
 import { getStrategiesData, selectStrategies } from '../../features/strategy/strategySlice'
-import { createAccountData } from '../../features/account/accountSlice';
-import Swal from 'sweetalert2'
-import './style.css'
+import { createAccountData, fetchAccountUploadBatchData, selectUploadBatch } from '../../features/account/accountSlice';
+import AccountUploadTable from '../../components/AccountUploadTable';
+// import Swal from 'sweetalert2'
+import './style.css' 
 
 const BalanceUpload = () => {
   const dispatch = useDispatch()
+  const uploadBatchData = useSelector(selectUploadBatch)
   const strategiesData = useSelector(selectStrategies)
   const allowedExtensions = ["csv", "xlsx", "xls"];
   const [fileName, setFileName] = useState("")
   const [formData, setFormData] = useState({
     strategy_id: "",
     fileName: "",
-    filePath: "",
-    fileUploaded: new Date(),
     fileData: null
   })
 
@@ -24,8 +24,7 @@ const BalanceUpload = () => {
     const reader = new FileReader();
     const file = e.target?.files[0];
     const fName = e.target.files[0].name;
-    const fPath = e.target.files[0].path;
-  
+
     const fileExtension = fName.split('.').pop().toLowerCase();
 
     if (allowedExtensions.includes(fileExtension)) {
@@ -41,7 +40,6 @@ const BalanceUpload = () => {
         setFormData({
           ...formData,
           fileName: fName,
-          filePath: fPath,
           fileData: parsedData
         });
       };
@@ -56,6 +54,7 @@ const BalanceUpload = () => {
   
   useEffect(() => {
      dispatch(getStrategiesData())
+     dispatch(fetchAccountUploadBatchData())
   }, [])
 
   return (
@@ -203,7 +202,9 @@ const BalanceUpload = () => {
               </div>
             </div>
           </div>
-          <div>table</div>
+          <div className='bu-table'>
+            <AccountUploadTable uploadBatchData={uploadBatchData}/>
+          </div>
         </div>
       </div>
     </div>

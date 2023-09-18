@@ -1,30 +1,42 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createAccount } from "../../service/Account";
+import { createAccount, fetchAccountUploadBatch } from "../../service/Account";
 
 const initialState = {
-    accounts: []
+    accounts: [],
+    accountUploadBatch: []
 };
 
 export const createAccountData = createAsyncThunk(
     "account/createAccount",
     async (data) => {
-      const createdAccount = await createAccount(data);
-      return createdAccount;
+      return await createAccount(data);
     }
-  );
+);
+
+export const fetchAccountUploadBatchData = createAsyncThunk(
+  "account/fetchAccountUploadBatch",
+  async () => {
+    return await fetchAccountUploadBatch()
+  }
+)
 
 const accountSlice = createSlice({
   name: "account",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    
+    builder.addCase(fetchAccountUploadBatchData.fulfilled, (state, action) => {
+      state.accountUploadBatch.push(action.payload.data)
+    })
   },
 });
 
 export const selectAccounts = (state) => {
-  return state.strategy.accounts;
+  return state.account.accounts;
 };
 
+export const selectUploadBatch = (state) => {
+  return state.account.accountUploadBatch;
+};
 
 export default accountSlice.reducer;
