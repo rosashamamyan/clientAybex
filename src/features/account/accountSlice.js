@@ -26,7 +26,7 @@ const accountSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchAccountUploadBatchData.fulfilled, (state, action) => {
-      state.accountUploadBatch.push(action.payload.data)
+      state.accountUploadBatch = action.payload.data
     })
   },
 });
