@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux"
 import * as XLSX from "xlsx";
 import {BiSolidDownload} from 'react-icons/bi'
 import { getStrategiesData, selectStrategies } from '../../features/strategy/strategySlice'
-import { createAccountData, fetchAccountUploadBatchData, selectUploadBatch } from '../../features/account/accountSlice';
+import { createAccountData, fetchAccountUploadBatchData, selectUploadBatch, selectLastUploadBatch, fetchLastAccountUploadBatchData } from '../../features/account/accountSlice';
 import AccountUploadTable from '../../components/AccountUploadTable';
 // import Swal from 'sweetalert2'
 import './style.css' 
@@ -11,6 +11,7 @@ import './style.css'
 const BalanceUpload = () => {
   const dispatch = useDispatch()
   const uploadBatchData = useSelector(selectUploadBatch)
+  const lastUploadBatchData = useSelector(selectLastUploadBatch)
   const strategiesData = useSelector(selectStrategies)
   const allowedExtensions = ["csv", "xlsx", "xls"];
   const [fileName, setFileName] = useState("")
@@ -52,11 +53,14 @@ const BalanceUpload = () => {
     dispatch(createAccountData(formData))
   }
   
+  
   useEffect(() => {
-     dispatch(getStrategiesData())
-     dispatch(fetchAccountUploadBatchData())
+    dispatch(getStrategiesData())
+    dispatch(fetchAccountUploadBatchData())
+    dispatch(fetchLastAccountUploadBatchData())
   }, [])
 
+  console.log("lastUploadBatchData", lastUploadBatchData);
   return (
     <div className="balance-upload">
       <div className="bu-container">
@@ -162,33 +166,40 @@ const BalanceUpload = () => {
 
             <div>
               <div>
-                <small>Upload Summary</small>
-                <small></small>
+                <b><small>Upload Summary</small></b>
+                <small>
+                  {lastUploadBatchData.status ? "Uploaded Successfully" : "error"}
+                </small>
               </div>
               <div>
                 <small>
                   <b>Last Uploaded Date and Time</b>
                 </small>
+                <small>{lastUploadBatchData.updatedAt}</small>
               </div>
               <div>
                 <small>
                   <b>File Name</b>
                 </small>
+                <small>{lastUploadBatchData.file_name}</small>
               </div>
               <div>
                 <small>
                   <b>Strategy Type</b>
                 </small>
+                {/* <small>{lastUploadBatchData?.strategy.strategy_name}</small> */}
               </div>
               <div>
                 <small>
                   <b>Total Accounts Loaded</b>
                 </small>
+                <small>{lastUploadBatchData.total_accounts}</small>
               </div>
               <div>
                 <small>
                   <b>New Accounts</b>
                 </small>
+                <small>{lastUploadBatchData.new_accounts}</small>
               </div>
               <div>
                 <small>
@@ -199,6 +210,7 @@ const BalanceUpload = () => {
                 <small>
                   <b>Status</b>
                 </small>
+                <small>{lastUploadBatchData.status}</small>
               </div>
             </div>
           </div>

@@ -7,3 +7,7 @@ export const createAccount = async (data) => {
 export const fetchAccountUploadBatch = async () => {
   return await $api.get(`/api/account/fetchAccountUploadBatch`)
 }
+
+export const fetchLastAccountUploadBatch = async () => {
+  return await $api.get(`/api/account/fetchLastAccountUploadBatch`)
+}

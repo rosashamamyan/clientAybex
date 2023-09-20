@@ -8,13 +8,22 @@ import "./style.css";
 
 const AccountUploadTable = ({ uploadBatchData }) => {
   const [uploadBatchId, setUploadBatchId] = useState(null);
+
+  function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'short' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', options)
+               .replace(/ /, '-');
+  }
+
+
   const columns = [
     {
       field: "strategyId", // --------
       headerName: "Strategy",
       width: 140,
     },
-    { field: "createdAt", headerName: "Period", width: 250 },
+    { field: "createdAt", headerName: "Period", valueGetter: (params) => formatDate(params.row.createdAt), width: 250 },
     { field: "total_accounts", headerName: "Total Accouts", width: 250 },
     { field: "new_accounts", headerName: "New Accounts", width: 230 },
     {
