@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import "./style.css";
 
 const AccountUploadTable = ({ uploadBatchData }) => {
+  const dispatch = useDispatch()
   const [uploadBatchId, setUploadBatchId] = useState(null);
 
   function formatDate(dateString) {
@@ -19,22 +20,23 @@ const AccountUploadTable = ({ uploadBatchData }) => {
 
   const columns = [
     {
-      field: "strategyId", // --------
+      field: "strategy", // --------
       headerName: "Strategy",
-      width: 140,
+      valueGetter: (params) => params.row.strategy?.strategy_name,
+      width: 200,
     },
-    { field: "createdAt", headerName: "Period", valueGetter: (params) => formatDate(params.row.createdAt), width: 250 },
-    { field: "total_accounts", headerName: "Total Accouts", width: 250 },
-    { field: "new_accounts", headerName: "New Accounts", width: 230 },
+    { field: "createdAt", headerName: "Period", valueGetter: (params) => formatDate(params.row.createdAt), width: 200 },
+    { field: "total_accounts", headerName: "Total Accouts", width: 200 },
+    { field: "new_accounts", headerName: "New Accounts", width: 200 },
     {
       field: "",
       headerName: "",
       renderCell: (params) => (
         <>
-          <FaTrash />
+          <FaTrash onClick={() => dispatch(uploadBatchId)}/>
         </>
       ),
-      width: 200,
+      width: 100,
     },
   ];
 

@@ -11,3 +11,7 @@ export const fetchAccountUploadBatch = async () => {
 export const fetchLastAccountUploadBatch = async () => {
   return await $api.get(`/api/account/fetchLastAccountUploadBatch`)
 }
+
+export const deleteUploadBatch = async (uploadBatchId) => {
+  return await $api.post(`/api/account/deleteUploadBatch`, {uploadBatchId})
+}

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createAccount, fetchAccountUploadBatch, fetchLastAccountUploadBatch } from "../../service/Account";
+import { createAccount, fetchAccountUploadBatch, fetchLastAccountUploadBatch, deleteUploadBatch } from "../../service/Account";
 
 const initialState = {
     accounts: [],
@@ -28,6 +28,13 @@ export const fetchLastAccountUploadBatchData = createAsyncThunk(
   }
 )
 
+export const deleteUploadBatchData = createAsyncThunk(
+  "account/deleteUploadBatch",
+  async (uploadBatchId) => {
+    return await deleteUploadBatch(uploadBatchId)
+  }
+)
+
 const accountSlice = createSlice({
   name: "account",
   initialState,
@@ -37,7 +44,10 @@ const accountSlice = createSlice({
       state.accountUploadBatch = action.payload.data
     });
     builder.addCase(fetchLastAccountUploadBatchData.fulfilled, (state, action) => {
-      state.lastUploadBatch = action.payload.data[0]
+      state.lastUploadBatch = action.payload.data
+    });
+    builder.addCase(deleteUploadBatchData.fulfilled, (state, action) => {
+      state.accountUploadBatch = action.payload.data
     })
   },
 });

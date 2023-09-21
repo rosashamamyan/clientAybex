@@ -158,3 +158,23 @@
 .bu-table {
     padding-left: 50px;
 }
+
+.upload-summary {
+    display: flex;
+    flex-direction: column;
+}
+
+.upload-summary > div {
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.upload-summary h4 {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.upload-summary small {
+    font-size: 16px;
+}

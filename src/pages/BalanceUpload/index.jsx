@@ -21,6 +21,8 @@ const BalanceUpload = () => {
     fileData: null
   })
 
+  console.log(uploadBatchData);
+
   const handleFileUpload = (e) => {
     const reader = new FileReader();
     const file = e.target?.files[0];
@@ -52,6 +54,28 @@ const BalanceUpload = () => {
   const handleSubmit = (formData) => {
     dispatch(createAccountData(formData))
   }
+
+  function convertDatetime(inputDatetime) {
+    const dt = new Date(inputDatetime);
+    
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const month = months[dt.getMonth()];
+    const day = dt.getDate();
+    const year = dt.getFullYear();
+    const hours = dt.getHours();
+    const minutes = dt.getMinutes();
+
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 || 12;
+
+    return `${month} ${day}, ${year}, ${formattedHours}:${String(minutes).padStart(2, '0')} ${ampm}`;
+}
+
+function formatDate(dateString) {
+  const options = { year: "numeric", month: "short" };
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", options).replace(/ /, "-");
+}
   
   
   useEffect(() => {
@@ -60,7 +84,6 @@ const BalanceUpload = () => {
     dispatch(fetchLastAccountUploadBatchData())
   }, [])
 
-  console.log("lastUploadBatchData", lastUploadBatchData);
   return (
     <div className="balance-upload">
       <div className="bu-container">
@@ -138,7 +161,10 @@ const BalanceUpload = () => {
                             onChange={handleFileUpload}
                             style={{ display: "none" }}
                           />
-                          <button type="button" disabled={!formData.strategy_id}>
+                          <button
+                            type="button"
+                            disabled={!formData.strategy_id}
+                          >
                             <label htmlFor="icon-button-file">
                               Choose File
                             </label>
@@ -164,18 +190,19 @@ const BalanceUpload = () => {
               </form>
             </div>
 
-            <div>
+            <div className="upload-summary">
               <div>
-                <b><small>Upload Summary</small></b>
-                <small>
-                  {lastUploadBatchData.status ? "Uploaded Successfully" : "error"}
-                </small>
+                <h4>Upload Summary</h4>
+                {lastUploadBatchData.status ?
+                  <h4 style={{color: '#438600FF'}}>Uploaded Successfully !</h4>
+                  :
+                  <h4 style={{color: 'red'}}>Upload failed</h4>}
               </div>
               <div>
                 <small>
                   <b>Last Uploaded Date and Time</b>
                 </small>
-                <small>{lastUploadBatchData.updatedAt}</small>
+                <small>{convertDatetime(lastUploadBatchData.updatedAt)}</small>
               </div>
               <div>
                 <small>
@@ -187,7 +214,7 @@ const BalanceUpload = () => {
                 <small>
                   <b>Strategy Type</b>
                 </small>
-                {/* <small>{lastUploadBatchData?.strategy.strategy_name}</small> */}
+                <small>{lastUploadBatchData.strategy_type}</small>
               </div>
               <div>
                 <small>
@@ -205,6 +232,9 @@ const BalanceUpload = () => {
                 <small>
                   <b>Period</b>
                 </small>
+                <small>
+                  {formatDate(lastUploadBatchData.updatedAt)}
+                </small>
               </div>
               <div>
                 <small>
@@ -214,8 +244,8 @@ const BalanceUpload = () => {
               </div>
             </div>
           </div>
-          <div className='bu-table'>
-            <AccountUploadTable uploadBatchData={uploadBatchData}/>
+          <div className="bu-table">
+            <AccountUploadTable uploadBatchData={uploadBatchData} />
           </div>
         </div>
       </div>
