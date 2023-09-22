@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { FaTrash } from "react-icons/fa";
 import { DataGrid } from "@mui/x-data-grid";
 import { v4 as uuidv4 } from "uuid";
 import "./style.css";
+import { deleteUploadBatchData } from "../../features/account/accountSlice";
+import Swal from "sweetalert2";
 
 const AccountUploadTable = ({ uploadBatchData }) => {
   const dispatch = useDispatch()
-  const [uploadBatchId, setUploadBatchId] = useState(null);
 
   function formatDate(dateString) {
     const options = { year: 'numeric', month: 'short' };
@@ -17,10 +17,23 @@ const AccountUploadTable = ({ uploadBatchData }) => {
                .replace(/ /, '-');
   }
 
+  const deleteUploadBatch = (uploadBatchId) => {
+    Swal.fire({
+      title: 'Do you want to save the changes?',
+      showCancelButton: true,
+      confirmButtonText: 'Save',
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteUploadBatchData(uploadBatchId))
+        Swal.fire('Deleted!', '', 'success')
+      }
+    })
+  }
 
   const columns = [
     {
-      field: "strategy", // --------
+      field: "strategy",
       headerName: "Strategy",
       valueGetter: (params) => params.row.strategy?.strategy_name,
       width: 200,
@@ -33,7 +46,7 @@ const AccountUploadTable = ({ uploadBatchData }) => {
       headerName: "",
       renderCell: (params) => (
         <>
-          <FaTrash onClick={() => dispatch(uploadBatchId)}/>
+          <FaTrash onClick={() => dispatch(() => deleteUploadBatch(params.row.id))} style={{cursor: "pointer"}}/>
         </>
       ),
       width: 100,
@@ -48,9 +61,6 @@ const AccountUploadTable = ({ uploadBatchData }) => {
           rows={uploadBatchData}
           columns={columns}
           getRowId={() => uuidv4()}
-          onRowClick={(rowData) => {
-            setUploadBatchId(rowData.row.id);
-          }}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 10 },

@@ -26,7 +26,6 @@ const StrategyTable = ({strategiesData}) => {
   const viewStrategy =  () => {
     setAnchorEl(null);
     const strategy = strategiesData.find(elm => elm.id === strategyId)
-    console.log(strategy);
     navigate(`addEditStrategy/${strategyId}`, {state: strategy})
   };
 

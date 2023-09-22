@@ -14,11 +14,7 @@ const EditUser = ({toggleEditModal, userData}) => {
 
   const {id, firstName, lastName, email, phone, dob, address} = userData
   const {country, city, postal_code, state} = address
-  
-  const handleDateChange = (newDate) => {
-    console.log(newDate);
-  };
-  
+
   const {
     register,
     handleSubmit,
@@ -119,9 +115,6 @@ const EditUser = ({toggleEditModal, userData}) => {
               <input
                 type="date"
                 className="dateInput"
-                onChange={(newDate) => {
-                  handleDateChange(newDate.toISOString());
-                }}
                 {...register("dob", { required: true })}
               />
             </div>

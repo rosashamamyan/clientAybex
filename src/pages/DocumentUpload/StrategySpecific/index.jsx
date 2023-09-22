@@ -78,8 +78,6 @@ const StrategySpecific = () => {
     reader.readAsText(file);
   };
   
-  console.log(data);
-  
   const onButtonClick = () => {
     inputRef.current.click();
   };

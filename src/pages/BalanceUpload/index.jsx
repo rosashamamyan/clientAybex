@@ -5,7 +5,6 @@ import {BiSolidDownload} from 'react-icons/bi'
 import { getStrategiesData, selectStrategies } from '../../features/strategy/strategySlice'
 import { createAccountData, fetchAccountUploadBatchData, selectUploadBatch, selectLastUploadBatch, fetchLastAccountUploadBatchData } from '../../features/account/accountSlice';
 import AccountUploadTable from '../../components/AccountUploadTable';
-// import Swal from 'sweetalert2'
 import './style.css' 
 
 const BalanceUpload = () => {
@@ -20,8 +19,6 @@ const BalanceUpload = () => {
     fileName: "",
     fileData: null
   })
-
-  console.log(uploadBatchData);
 
   const handleFileUpload = (e) => {
     const reader = new FileReader();
@@ -240,7 +237,7 @@ function formatDate(dateString) {
                 <small>
                   <b>Status</b>
                 </small>
-                <small>{lastUploadBatchData.status}</small>
+                <small>{lastUploadBatchData.status ? "active" : "inactive"}</small>
               </div>
             </div>
           </div>
